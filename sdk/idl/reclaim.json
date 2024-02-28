@@ -1,7 +1,274 @@
 {
   "version": "0.1.0",
   "name": "reclaim",
-  "instructions": [],
+  "instructions": [
+    {
+      "name": "initializeEpochConfig",
+      "accounts": [
+        {
+          "name": "epochConfig",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "deployer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "InitializeEpochConfigArgs"
+          }
+        }
+      ]
+    },
+    {
+      "name": "addEpoch",
+      "accounts": [
+        {
+          "name": "deployer",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "epoch",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "epochConfig",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "rentPayer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "AddEpochArgs"
+          }
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "EpochConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "deployer",
+            "type": "publicKey"
+          },
+          {
+            "name": "epochDurationSeconds",
+            "type": "u64"
+          },
+          {
+            "name": "epochIndex",
+            "type": "u64"
+          },
+          {
+            "name": "epochs",
+            "type": {
+              "vec": "publicKey"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Epoch",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "epochConfig",
+            "type": "publicKey"
+          },
+          {
+            "name": "index",
+            "type": "u64"
+          },
+          {
+            "name": "createdAt",
+            "type": "i64"
+          },
+          {
+            "name": "expiredAt",
+            "type": "i64"
+          },
+          {
+            "name": "minimumWitnessesForClaim",
+            "type": "u8"
+          },
+          {
+            "name": "witnesses",
+            "type": {
+              "vec": {
+                "defined": "Witness"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "AddEpochArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "witnesses",
+            "type": {
+              "vec": {
+                "defined": "Witness"
+              }
+            }
+          },
+          {
+            "name": "minimumWitnessesForClaim",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitializeEpochConfigArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "epochDurationSeconds",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Witness",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "address",
+            "type": "publicKey"
+          },
+          {
+            "name": "host",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "AddEpochEvent",
+      "fields": [
+        {
+          "name": "bump",
+          "type": "u8",
+          "index": false
+        },
+        {
+          "name": "epochConfig",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "index",
+          "type": "u64",
+          "index": false
+        },
+        {
+          "name": "createdAt",
+          "type": "i64",
+          "index": false
+        },
+        {
+          "name": "expiredAt",
+          "type": "i64",
+          "index": false
+        },
+        {
+          "name": "minimumWitnessesForClaim",
+          "type": "u8",
+          "index": false
+        },
+        {
+          "name": "witnesses",
+          "type": {
+            "vec": {
+              "defined": "Witness"
+            }
+          },
+          "index": false
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidEpochDuration",
+      "msg": "Invalid Epoch Duration"
+    },
+    {
+      "code": 6001,
+      "name": "Unauthorized",
+      "msg": "Unauthorized Deployer"
+    },
+    {
+      "code": 6002,
+      "name": "HostTooLong",
+      "msg": "Host length exceeds limit"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidWitnessClaimCount",
+      "msg": "Invalid Witnes Claim count"
+    },
+    {
+      "code": 6004,
+      "name": "EpochAlreadyExists",
+      "msg": "Epoch already exists"
+    },
+    {
+      "code": 6005,
+      "name": "MaxEpochLengthReached",
+      "msg": "Max Epochs reached"
+    }
+  ],
   "metadata": {
     "address": "rEcLDWaVLaymz82eGr6cutosPxE6SEzw6q4pbtLuyqf",
     "origin": "anchor",
