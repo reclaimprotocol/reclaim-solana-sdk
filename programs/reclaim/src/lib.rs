@@ -1,12 +1,12 @@
 use anchor_lang::prelude::*;
 
-declare_id!("HPHX51Lt497k57RoegWnzhg2Spvaui4kc93dDFwhpbwP");
+declare_id!("rEcLDWaVLaymz82eGr6cutosPxE6SEzw6q4pbtLuyqf");
 
 #[program]
 pub mod reclaim {
     use super::*;
 
-    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
+    pub fn initialize(_: Context<Initialize>) -> Result<()> {
         Ok(())
     }
 }

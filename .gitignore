@@ -1,4 +1,3 @@
-
 .anchor
 .DS_Store
 target
@@ -6,3 +5,9 @@ target
 node_modules
 test-ledger
 .yarn
+.yarn-error
+
+
+lib
+.crates
+.keys
