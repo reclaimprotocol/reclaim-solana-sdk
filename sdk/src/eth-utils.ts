@@ -1,8 +1,12 @@
 import { BeaconState, ClaimInfo, WitnessData, ClaimID } from "./types";
-import { ethers, keccak256 } from "ethers";
+import { keccak256, ethers, HDNodeWallet } from "ethers";
 
 export function hashClaimInfo(info: ClaimInfo): ClaimID {
-  const str = `${info.provider}\n${info.parameters}\n${info.context || ""}`;
+  const str = [
+    info.provider,
+    info.parameters,
+    info.context.toString().toLowerCase(),
+  ].join("\n");
   return keccak256(Buffer.from(str, "utf-8")).toLowerCase();
 }
 
@@ -50,4 +54,43 @@ export function fetchWitnessListForClaim(
   }
 
   return selectedWitnesses;
+}
+
+export async function witnessSelectSignMessage({
+  witnesses,
+  message,
+  epochIndex,
+  timestamp,
+  minimumWitnessesForClaim,
+  identifier,
+}: {
+  witnesses: { wallet: HDNodeWallet; id: string; url: string }[];
+  message: string;
+  epochIndex: number;
+  timestamp: number;
+  minimumWitnessesForClaim: number;
+  identifier: string;
+}) {
+  const selectedWitnesses = fetchWitnessListForClaim(
+    {
+      witnesses: witnesses.map(({ id, url }) => ({ id, url })),
+      epoch: epochIndex,
+      witnessesRequiredForClaim: minimumWitnessesForClaim,
+      nextEpochTimestampS: 0,
+    },
+    identifier,
+    timestamp
+  ).map((w) => w.id);
+
+  console.log("Selected Witnesses:", selectedWitnesses);
+
+  return Promise.all(
+    witnesses
+      .filter((w) => selectedWitnesses.includes(w.id))
+      .map((w) => w.wallet.signMessage(message))
+  );
+}
+
+export function serializeHash(hash: string) {
+  return [...new Uint8Array(ethers.getBytes(hash))];
 }

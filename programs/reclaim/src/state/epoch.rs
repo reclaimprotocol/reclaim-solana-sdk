@@ -2,6 +2,7 @@ use anchor_lang::prelude::*;
 
 use crate::constants::*;
 use crate::errors::*;
+use crate::utils::is_valid_ethereum_address;
 
 #[derive(AnchorSerialize, AnchorDeserialize, PartialEq, Eq, Debug, Clone)]
 pub struct Witness {
@@ -43,7 +44,15 @@ impl Epoch {
 
     pub fn validate(&self) -> Result<()> {
         let witnesses = &self.witnesses;
+        if witnesses.len().gt(&usize::from(MAX_WITNESSES)) {
+            return err!(ReclaimError::MaxWitnessesReached);
+        }
+
         for witness in witnesses {
+            if !is_valid_ethereum_address(&witness.address) {
+                return err!(ReclaimError::InvalidWitness);
+            }
+
             if witness.host.len().gt(&MAX_WITNESS_HOST_SIZE) {
                 return err!(ReclaimError::HostTooLong);
             }

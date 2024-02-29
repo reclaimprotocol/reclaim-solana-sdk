@@ -36,19 +36,19 @@ export const addEpochStruct = new beet.FixableBeetArgsStruct<
 /**
  * Accounts required by the _addEpoch_ instruction
  *
- * @property [**signer**] deployer
  * @property [_writable_] epoch
  * @property [_writable_] epochConfig
  * @property [_writable_, **signer**] rentPayer
+ * @property [**signer**] deployer
  * @category Instructions
  * @category AddEpoch
  * @category generated
  */
 export type AddEpochInstructionAccounts = {
-  deployer: web3.PublicKey
   epoch: web3.PublicKey
   epochConfig: web3.PublicKey
   rentPayer: web3.PublicKey
+  deployer: web3.PublicKey
   systemProgram?: web3.PublicKey
   anchorRemainingAccounts?: web3.AccountMeta[]
 }
@@ -78,11 +78,6 @@ export function createAddEpochInstruction(
   })
   const keys: web3.AccountMeta[] = [
     {
-      pubkey: accounts.deployer,
-      isWritable: false,
-      isSigner: true,
-    },
-    {
       pubkey: accounts.epoch,
       isWritable: true,
       isSigner: false,
@@ -95,6 +90,11 @@ export function createAddEpochInstruction(
     {
       pubkey: accounts.rentPayer,
       isWritable: true,
+      isSigner: true,
+    },
+    {
+      pubkey: accounts.deployer,
+      isWritable: false,
       isSigner: true,
     },
     {

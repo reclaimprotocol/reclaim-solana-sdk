@@ -36,6 +36,27 @@ export const addMemberGroupStruct = new beet.FixableBeetArgsStruct<
   ],
   'AddMemberGroupInstructionArgs'
 )
+/**
+ * Accounts required by the _addMemberGroup_ instruction
+ *
+ * @property [_writable_] group
+ * @property [] epoch
+ * @property [] epochConfig
+ * @property [**signer**] signer
+ * @property [_writable_, **signer**] rentPayer
+ * @category Instructions
+ * @category AddMemberGroup
+ * @category generated
+ */
+export type AddMemberGroupInstructionAccounts = {
+  group: web3.PublicKey
+  epoch: web3.PublicKey
+  epochConfig: web3.PublicKey
+  signer: web3.PublicKey
+  rentPayer: web3.PublicKey
+  systemProgram?: web3.PublicKey
+  anchorRemainingAccounts?: web3.AccountMeta[]
+}
 
 export const addMemberGroupInstructionDiscriminator = [
   19, 208, 234, 206, 11, 74, 237, 172,
@@ -44,6 +65,7 @@ export const addMemberGroupInstructionDiscriminator = [
 /**
  * Creates a _AddMemberGroup_ instruction.
  *
+ * @param accounts that will be accessed while the instruction is processed
  * @param args to provide as instruction data to the program
  *
  * @category Instructions
@@ -51,6 +73,7 @@ export const addMemberGroupInstructionDiscriminator = [
  * @category generated
  */
 export function createAddMemberGroupInstruction(
+  accounts: AddMemberGroupInstructionAccounts,
   args: AddMemberGroupInstructionArgs,
   programId = new web3.PublicKey('rEcLDWaVLaymz82eGr6cutosPxE6SEzw6q4pbtLuyqf')
 ) {
@@ -58,7 +81,44 @@ export function createAddMemberGroupInstruction(
     instructionDiscriminator: addMemberGroupInstructionDiscriminator,
     ...args,
   })
-  const keys: web3.AccountMeta[] = []
+  const keys: web3.AccountMeta[] = [
+    {
+      pubkey: accounts.group,
+      isWritable: true,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.epoch,
+      isWritable: false,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.epochConfig,
+      isWritable: false,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.signer,
+      isWritable: false,
+      isSigner: true,
+    },
+    {
+      pubkey: accounts.rentPayer,
+      isWritable: true,
+      isSigner: true,
+    },
+    {
+      pubkey: accounts.systemProgram ?? web3.SystemProgram.programId,
+      isWritable: false,
+      isSigner: false,
+    },
+  ]
+
+  if (accounts.anchorRemainingAccounts != null) {
+    for (const acc of accounts.anchorRemainingAccounts) {
+      keys.push(acc)
+    }
+  }
 
   const ix = new web3.TransactionInstruction({
     programId,

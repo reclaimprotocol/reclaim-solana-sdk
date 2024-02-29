@@ -9,29 +9,36 @@ use crate::state::*;
 pub struct CreateGroup<'info> {
     #[account(
         init,
-        payer = administrator,
+        payer = creator,
         space = Group::size(&[]),
         seeds = [
             SEED_PREFIX,
             SEED_GROUP,
+            create_key.key().as_ref(),
             args.provider.as_bytes(),
-            administrator.key().as_ref()
         ],
         bump
     )]
     pub group: Account<'info, Group>,
 
-    // TODO: Not sure if the administrator is the one who created the epoch config. If yes, need to create that binding here.
     #[account(mut)]
-    pub administrator: Signer<'info>,
+    pub creator: Signer<'info>,
+    pub create_key: Signer<'info>,
 
     pub system_program: Program<'info, System>,
 }
 
 pub fn create(ctx: Context<CreateGroup>, args: CreateGroupArgs) -> Result<()> {
     let group = &mut ctx.accounts.group;
+    let creator = &ctx.accounts.creator;
+    let create_key = &ctx.accounts.create_key;
+
+    // TODO: Store group id based on provider
+
     group.set_inner(Group {
         bump: ctx.bumps.group,
+        create_key: create_key.key(),
+        creator: creator.key(),
         provider: args.provider.clone(),
         members: vec![],
     });

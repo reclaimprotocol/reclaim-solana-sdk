@@ -1,3 +1,5 @@
+import { PublicKey } from "@solana/web3.js";
+
 export type WitnessData = {
   id: string;
   url: string;
@@ -30,15 +32,15 @@ export type ClaimID = string;
 export type ClaimInfo = {
   provider: string;
   parameters: string;
-  context?: string;
+  context: PublicKey;
 };
 
 export type AnyClaimInfo = ClaimInfo | { identifier: ClaimID };
 
 export type CompleteClaimData = {
-  owner: string;
-  timestampS: number;
-  epoch: number;
+  signer: PublicKey;
+  timestamp: number;
+  epochIndex: number;
 } & AnyClaimInfo;
 
 export type SignedClaim = {

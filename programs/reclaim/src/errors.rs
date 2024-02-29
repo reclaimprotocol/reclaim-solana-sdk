@@ -4,7 +4,9 @@ use anchor_lang::prelude::*;
 pub enum ReclaimError {
     #[msg("Invalid Epoch Duration")]
     InvalidEpochDuration,
-    #[msg("Unauthorized Deployer")]
+    #[msg("Invalid Witness")]
+    InvalidWitness,
+    #[msg("Unauthorized address")]
     Unauthorized,
     #[msg("Host length exceeds limit")]
     HostTooLong,
@@ -16,6 +18,14 @@ pub enum ReclaimError {
     EpochAlreadyExists,
     #[msg("Max Epochs reached")]
     MaxEpochLengthReached,
+    #[msg("Max Witnesses reached")]
+    MaxWitnessesReached,
     #[msg("Member already exists")]
     MemberAlreadyExists,
+    #[msg("Max Members reached")]
+    MaxMembersReached,
+    #[msg("Invalid Witness Signature")]
+    InvalidWitnessSignature,
+    #[msg("Arithmetic Error")]
+    ArithmeticPanic,
 }

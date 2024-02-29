@@ -9,14 +9,14 @@ const SEED_GROUP = new TextEncoder().encode("group");
 const SEED_DAPP = new TextEncoder().encode("dapp");
 
 export function getEpochConfigPda({
-  deployer,
+  createKey,
   programId = PROGRAM_ID,
 }: {
-  deployer: PublicKey;
+  createKey: PublicKey;
   programId?: PublicKey;
 }): [PublicKey, number] {
   return PublicKey.findProgramAddressSync(
-    [SEED_PREFIX, SEED_EPOCH_CONFIG, deployer.toBuffer()],
+    [SEED_PREFIX, SEED_EPOCH_CONFIG, createKey.toBuffer()],
     programId
   );
 }
@@ -32,6 +32,21 @@ export function getEpochPda({
 }): [PublicKey, number] {
   return PublicKey.findProgramAddressSync(
     [SEED_PREFIX, epochConfig.toBuffer(), SEED_EPOCH, toU32Bytes(epochIndex)],
+    programId
+  );
+}
+
+export function getGroupPda({
+  createKey,
+  provider,
+  programId = PROGRAM_ID,
+}: {
+  createKey: PublicKey;
+  provider: string;
+  programId?: PublicKey;
+}): [PublicKey, number] {
+  return PublicKey.findProgramAddressSync(
+    [SEED_PREFIX, SEED_GROUP, createKey.toBuffer(), new TextEncoder().encode(provider)],
     programId
   );
 }

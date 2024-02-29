@@ -2,14 +2,13 @@ use crate::constants::*;
 use crate::errors::*;
 use crate::events::*;
 use crate::state::*;
+use crate::utils::*;
 
 use anchor_lang::prelude::*;
 
 #[derive(Accounts)]
 #[instruction(args: AddEpochArgs)]
 pub struct AddEpoch<'info> {
-    pub deployer: Signer<'info>,
-
     #[account(
         init,
         payer = rent_payer,
@@ -29,7 +28,7 @@ pub struct AddEpoch<'info> {
         seeds = [
             SEED_PREFIX,
             SEED_EPOCH_CONFIG,
-            deployer.key().as_ref()
+            epoch_config.create_key.as_ref()
         ],
         bump = epoch_config.bump,
         has_one = deployer @ ReclaimError::Unauthorized
@@ -38,23 +37,20 @@ pub struct AddEpoch<'info> {
 
     #[account(mut)]
     pub rent_payer: Signer<'info>,
+    pub deployer: Signer<'info>,
 
     pub system_program: Program<'info, System>,
 }
 
 pub fn add(ctx: Context<AddEpoch>, args: AddEpochArgs) -> Result<()> {
     let AddEpochArgs {
-        mut witnesses,
+        witnesses,
         minimum_witnesses_for_claim,
     } = args;
 
     let epoch_config = &mut ctx.accounts.epoch_config;
     let system_program = &ctx.accounts.system_program;
     let rent_payer = &ctx.accounts.rent_payer;
-
-    // Helpful for binary search later
-    witnesses.sort_by_key(|w| w.address.clone());
-    witnesses.dedup_by_key(|w| w.address.clone());
 
     // Epoch mutations
     let epoch_index = epoch_config.epoch_index.checked_add(1).unwrap();
@@ -85,9 +81,10 @@ pub fn add(ctx: Context<AddEpoch>, args: AddEpochArgs) -> Result<()> {
         Err(epoch_index) => epoch_config.epochs.insert(epoch_index, epoch.key()),
     }
 
-    EpochConfig::realloc_if_needed(
+    let required_size = EpochConfig::size(&epoch_config.epochs);
+    realloc(
         epoch_config.to_account_info(),
-        &epoch_config.epochs,
+        required_size,
         rent_payer.to_account_info(),
         system_program.to_account_info(),
     )?;

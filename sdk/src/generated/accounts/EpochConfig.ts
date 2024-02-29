@@ -16,6 +16,7 @@ import * as beetSolana from '@metaplex-foundation/beet-solana'
  */
 export type EpochConfigArgs = {
   bump: number
+  createKey: web3.PublicKey
   deployer: web3.PublicKey
   epochDurationSeconds: beet.bignum
   epochIndex: number
@@ -33,6 +34,7 @@ export const epochConfigDiscriminator = [190, 66, 87, 197, 214, 153, 144, 193]
 export class EpochConfig implements EpochConfigArgs {
   private constructor(
     readonly bump: number,
+    readonly createKey: web3.PublicKey,
     readonly deployer: web3.PublicKey,
     readonly epochDurationSeconds: beet.bignum,
     readonly epochIndex: number,
@@ -45,6 +47,7 @@ export class EpochConfig implements EpochConfigArgs {
   static fromArgs(args: EpochConfigArgs) {
     return new EpochConfig(
       args.bump,
+      args.createKey,
       args.deployer,
       args.epochDurationSeconds,
       args.epochIndex,
@@ -158,6 +161,7 @@ export class EpochConfig implements EpochConfigArgs {
   pretty() {
     return {
       bump: this.bump,
+      createKey: this.createKey.toBase58(),
       deployer: this.deployer.toBase58(),
       epochDurationSeconds: (() => {
         const x = <{ toNumber: () => number }>this.epochDurationSeconds
@@ -189,6 +193,7 @@ export const epochConfigBeet = new beet.FixableBeetStruct<
   [
     ['accountDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
     ['bump', beet.u8],
+    ['createKey', beetSolana.publicKey],
     ['deployer', beetSolana.publicKey],
     ['epochDurationSeconds', beet.u64],
     ['epochIndex', beet.u32],

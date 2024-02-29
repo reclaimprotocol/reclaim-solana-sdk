@@ -13,15 +13,15 @@ pub struct InitializeEpochConfig<'info> {
         seeds = [
             SEED_PREFIX,
             SEED_EPOCH_CONFIG,
-            deployer.key().as_ref()
+            create_key.key().as_ref()
         ],
         bump
     )]
     pub epoch_config: Account<'info, EpochConfig>,
+    pub create_key: Signer<'info>,
 
     #[account(mut)]
     pub deployer: Signer<'info>,
-
     pub system_program: Program<'info, System>,
 }
 
@@ -32,6 +32,7 @@ pub fn initialize(
     let InitializeEpochConfig {
         epoch_config,
         deployer,
+        create_key,
         ..
     } = ctx.accounts;
 
@@ -42,6 +43,7 @@ pub fn initialize(
 
     epoch_config.set_inner(EpochConfig {
         bump: ctx.bumps.epoch_config,
+        create_key: create_key.key(),
         deployer: deployer.key(),
         epoch_duration_seconds: args.epoch_duration_seconds,
         epoch_index: 0,

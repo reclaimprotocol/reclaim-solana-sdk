@@ -7,7 +7,7 @@
     "generate-sdk": "yarn workspace sdk generate",
     "build-sdk": "yarn workspace sdk build",
     "build": "yarn generate-sdk && yarn build-sdk",
-    "test": "yarn build && anchor test -- --features=testing",
+    "test": "yarn build && anchor test",
     "pretest": "mkdir -p target/deploy && cp ./test-keypairs/test-program-keypair.json ./target/deploy/reclaim-keypair.json"
   },
   "dependencies": {

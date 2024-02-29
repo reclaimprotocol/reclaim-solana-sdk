@@ -11,6 +11,11 @@
           "isSigner": false
         },
         {
+          "name": "createKey",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
           "name": "deployer",
           "isMut": true,
           "isSigner": true
@@ -34,11 +39,6 @@
       "name": "addEpoch",
       "accounts": [
         {
-          "name": "deployer",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
           "name": "epoch",
           "isMut": true,
           "isSigner": false
@@ -51,6 +51,11 @@
         {
           "name": "rentPayer",
           "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "deployer",
+          "isMut": false,
           "isSigner": true
         },
         {
@@ -77,8 +82,13 @@
           "isSigner": false
         },
         {
-          "name": "administrator",
+          "name": "creator",
           "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "createKey",
+          "isMut": false,
           "isSigner": true
         },
         {
@@ -98,7 +108,38 @@
     },
     {
       "name": "addMemberGroup",
-      "accounts": [],
+      "accounts": [
+        {
+          "name": "group",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "epoch",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "epochConfig",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "rentPayer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
       "args": [
         {
           "name": "args",
@@ -130,6 +171,10 @@
           {
             "name": "bump",
             "type": "u8"
+          },
+          {
+            "name": "createKey",
+            "type": "publicKey"
           },
           {
             "name": "deployer",
@@ -200,6 +245,14 @@
           {
             "name": "bump",
             "type": "u8"
+          },
+          {
+            "name": "createKey",
+            "type": "publicKey"
+          },
+          {
+            "name": "creator",
+            "type": "publicKey"
           },
           {
             "name": "provider",
@@ -309,6 +362,31 @@
       }
     },
     {
+      "name": "SignedClaim",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "claimData",
+            "type": {
+              "defined": "ClaimData"
+            }
+          },
+          {
+            "name": "signatures",
+            "type": {
+              "vec": {
+                "array": [
+                  "u8",
+                  65
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
       "name": "ClaimInfo",
       "type": {
         "kind": "struct",
@@ -336,14 +414,15 @@
           {
             "name": "identifier",
             "type": {
-              "vec": "bytes"
+              "array": [
+                "u8",
+                32
+              ]
             }
           },
           {
-            "name": "address",
-            "type": {
-              "vec": "bytes"
-            }
+            "name": "signer",
+            "type": "publicKey"
           },
           {
             "name": "timestamp",
@@ -352,26 +431,6 @@
           {
             "name": "epochIndex",
             "type": "u32"
-          }
-        ]
-      }
-    },
-    {
-      "name": "SignedClaim",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "claimData",
-            "type": {
-              "defined": "ClaimData"
-            }
-          },
-          {
-            "name": "signatures",
-            "type": {
-              "vec": "bytes"
-            }
           }
         ]
       }
@@ -446,38 +505,63 @@
     },
     {
       "code": 6001,
-      "name": "Unauthorized",
-      "msg": "Unauthorized Deployer"
+      "name": "InvalidWitness",
+      "msg": "Invalid Witness"
     },
     {
       "code": 6002,
+      "name": "Unauthorized",
+      "msg": "Unauthorized address"
+    },
+    {
+      "code": 6003,
       "name": "HostTooLong",
       "msg": "Host length exceeds limit"
     },
     {
-      "code": 6003,
+      "code": 6004,
       "name": "ProviderTooLong",
       "msg": "Provider length exceeds limit"
     },
     {
-      "code": 6004,
+      "code": 6005,
       "name": "InvalidWitnessClaimCount",
       "msg": "Invalid Witnes Claim count"
     },
     {
-      "code": 6005,
+      "code": 6006,
       "name": "EpochAlreadyExists",
       "msg": "Epoch already exists"
     },
     {
-      "code": 6006,
+      "code": 6007,
       "name": "MaxEpochLengthReached",
       "msg": "Max Epochs reached"
     },
     {
-      "code": 6007,
+      "code": 6008,
+      "name": "MaxWitnessesReached",
+      "msg": "Max Witnesses reached"
+    },
+    {
+      "code": 6009,
       "name": "MemberAlreadyExists",
       "msg": "Member already exists"
+    },
+    {
+      "code": 6010,
+      "name": "MaxMembersReached",
+      "msg": "Max Members reached"
+    },
+    {
+      "code": 6011,
+      "name": "InvalidWitnessSignature",
+      "msg": "Invalid Witness Signature"
+    },
+    {
+      "code": 6012,
+      "name": "ArithmeticPanic",
+      "msg": "Arithmetic Error"
     }
   ],
   "metadata": {

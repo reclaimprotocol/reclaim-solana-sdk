@@ -37,14 +37,16 @@ export const createGroupStruct = new beet.FixableBeetArgsStruct<
  * Accounts required by the _createGroup_ instruction
  *
  * @property [_writable_] group
- * @property [_writable_, **signer**] administrator
+ * @property [_writable_, **signer**] creator
+ * @property [**signer**] createKey
  * @category Instructions
  * @category CreateGroup
  * @category generated
  */
 export type CreateGroupInstructionAccounts = {
   group: web3.PublicKey
-  administrator: web3.PublicKey
+  creator: web3.PublicKey
+  createKey: web3.PublicKey
   systemProgram?: web3.PublicKey
   anchorRemainingAccounts?: web3.AccountMeta[]
 }
@@ -79,8 +81,13 @@ export function createCreateGroupInstruction(
       isSigner: false,
     },
     {
-      pubkey: accounts.administrator,
+      pubkey: accounts.creator,
       isWritable: true,
+      isSigner: true,
+    },
+    {
+      pubkey: accounts.createKey,
+      isWritable: false,
       isSigner: true,
     },
     {

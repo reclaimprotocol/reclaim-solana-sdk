@@ -40,6 +40,7 @@ export const initializeEpochConfigStruct = new beet.BeetArgsStruct<
  * Accounts required by the _initializeEpochConfig_ instruction
  *
  * @property [_writable_] epochConfig
+ * @property [**signer**] createKey
  * @property [_writable_, **signer**] deployer
  * @category Instructions
  * @category InitializeEpochConfig
@@ -47,6 +48,7 @@ export const initializeEpochConfigStruct = new beet.BeetArgsStruct<
  */
 export type InitializeEpochConfigInstructionAccounts = {
   epochConfig: web3.PublicKey
+  createKey: web3.PublicKey
   deployer: web3.PublicKey
   systemProgram?: web3.PublicKey
   anchorRemainingAccounts?: web3.AccountMeta[]
@@ -80,6 +82,11 @@ export function createInitializeEpochConfigInstruction(
       pubkey: accounts.epochConfig,
       isWritable: true,
       isSigner: false,
+    },
+    {
+      pubkey: accounts.createKey,
+      isWritable: false,
+      isSigner: true,
     },
     {
       pubkey: accounts.deployer,
