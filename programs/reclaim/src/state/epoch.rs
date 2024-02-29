@@ -1,11 +1,11 @@
 use anchor_lang::prelude::*;
 
-use crate::constants::MAX_WITNESS_HOST_SIZE;
+use crate::constants::*;
 use crate::errors::*;
 
 #[derive(AnchorSerialize, AnchorDeserialize, PartialEq, Eq, Debug, Clone)]
 pub struct Witness {
-    pub address: Pubkey,
+    pub address: String,
     pub host: String,
 }
 
@@ -16,7 +16,7 @@ pub struct Epoch {
     // Epoch Config
     pub epoch_config: Pubkey,
     // Index
-    pub index: u64,
+    pub index: u32,
     // Epoch Creation timestamp
     pub created_at: i64,
     // Epoch Expiration timestamp
@@ -29,11 +29,11 @@ pub struct Epoch {
 
 impl Epoch {
     pub fn size(witnesses: &[Witness]) -> usize {
-        let witness_size = 32 + (4 + MAX_WITNESS_HOST_SIZE);
+        let witness_size = (4 + MAX_WITNESS_ADDRESS_SIZE) + (4 + MAX_WITNESS_HOST_SIZE);
         8 + // Anchor discriminator
         1 + // Bump
         32 + // Epoch Config
-        8 + // Index
+        4 + // Index
         8 + // Created At
         8 + // Expired At
         1 + // Minimum Witnesses for Claim

@@ -75,13 +75,36 @@ createErrorFromCodeLookup.set(0x1772, () => new HostTooLongError())
 createErrorFromNameLookup.set('HostTooLong', () => new HostTooLongError())
 
 /**
+ * ProviderTooLong: 'Provider length exceeds limit'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class ProviderTooLongError extends Error {
+  readonly code: number = 0x1773
+  readonly name: string = 'ProviderTooLong'
+  constructor() {
+    super('Provider length exceeds limit')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, ProviderTooLongError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x1773, () => new ProviderTooLongError())
+createErrorFromNameLookup.set(
+  'ProviderTooLong',
+  () => new ProviderTooLongError()
+)
+
+/**
  * InvalidWitnessClaimCount: 'Invalid Witnes Claim count'
  *
  * @category Errors
  * @category generated
  */
 export class InvalidWitnessClaimCountError extends Error {
-  readonly code: number = 0x1773
+  readonly code: number = 0x1774
   readonly name: string = 'InvalidWitnessClaimCount'
   constructor() {
     super('Invalid Witnes Claim count')
@@ -91,7 +114,7 @@ export class InvalidWitnessClaimCountError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x1773, () => new InvalidWitnessClaimCountError())
+createErrorFromCodeLookup.set(0x1774, () => new InvalidWitnessClaimCountError())
 createErrorFromNameLookup.set(
   'InvalidWitnessClaimCount',
   () => new InvalidWitnessClaimCountError()
@@ -104,7 +127,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class EpochAlreadyExistsError extends Error {
-  readonly code: number = 0x1774
+  readonly code: number = 0x1775
   readonly name: string = 'EpochAlreadyExists'
   constructor() {
     super('Epoch already exists')
@@ -114,7 +137,7 @@ export class EpochAlreadyExistsError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x1774, () => new EpochAlreadyExistsError())
+createErrorFromCodeLookup.set(0x1775, () => new EpochAlreadyExistsError())
 createErrorFromNameLookup.set(
   'EpochAlreadyExists',
   () => new EpochAlreadyExistsError()
@@ -127,7 +150,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class MaxEpochLengthReachedError extends Error {
-  readonly code: number = 0x1775
+  readonly code: number = 0x1776
   readonly name: string = 'MaxEpochLengthReached'
   constructor() {
     super('Max Epochs reached')
@@ -137,10 +160,33 @@ export class MaxEpochLengthReachedError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x1775, () => new MaxEpochLengthReachedError())
+createErrorFromCodeLookup.set(0x1776, () => new MaxEpochLengthReachedError())
 createErrorFromNameLookup.set(
   'MaxEpochLengthReached',
   () => new MaxEpochLengthReachedError()
+)
+
+/**
+ * MemberAlreadyExists: 'Member already exists'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class MemberAlreadyExistsError extends Error {
+  readonly code: number = 0x1777
+  readonly name: string = 'MemberAlreadyExists'
+  constructor() {
+    super('Member already exists')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, MemberAlreadyExistsError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x1777, () => new MemberAlreadyExistsError())
+createErrorFromNameLookup.set(
+  'MemberAlreadyExists',
+  () => new MemberAlreadyExistsError()
 )
 
 /**

@@ -18,7 +18,7 @@ import { Witness, witnessBeet } from '../types/Witness'
 export type EpochArgs = {
   bump: number
   epochConfig: web3.PublicKey
-  index: beet.bignum
+  index: number
   createdAt: beet.bignum
   expiredAt: beet.bignum
   minimumWitnessesForClaim: number
@@ -37,7 +37,7 @@ export class Epoch implements EpochArgs {
   private constructor(
     readonly bump: number,
     readonly epochConfig: web3.PublicKey,
-    readonly index: beet.bignum,
+    readonly index: number,
     readonly createdAt: beet.bignum,
     readonly expiredAt: beet.bignum,
     readonly minimumWitnessesForClaim: number,
@@ -166,17 +166,7 @@ export class Epoch implements EpochArgs {
     return {
       bump: this.bump,
       epochConfig: this.epochConfig.toBase58(),
-      index: (() => {
-        const x = <{ toNumber: () => number }>this.index
-        if (typeof x.toNumber === 'function') {
-          try {
-            return x.toNumber()
-          } catch (_) {
-            return x
-          }
-        }
-        return x
-      })(),
+      index: this.index,
       createdAt: (() => {
         const x = <{ toNumber: () => number }>this.createdAt
         if (typeof x.toNumber === 'function') {
@@ -219,7 +209,7 @@ export const epochBeet = new beet.FixableBeetStruct<
     ['accountDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
     ['bump', beet.u8],
     ['epochConfig', beetSolana.publicKey],
-    ['index', beet.u64],
+    ['index', beet.u32],
     ['createdAt', beet.i64],
     ['expiredAt', beet.i64],
     ['minimumWitnessesForClaim', beet.u8],

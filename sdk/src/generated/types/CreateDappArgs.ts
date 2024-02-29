@@ -6,19 +6,15 @@
  */
 
 import * as beet from '@metaplex-foundation/beet'
-export type Witness = {
-  address: string
-  host: string
+export type CreateDappArgs = {
+  id: beet.bignum
 }
 
 /**
  * @category userTypes
  * @category generated
  */
-export const witnessBeet = new beet.FixableBeetArgsStruct<Witness>(
-  [
-    ['address', beet.utf8String],
-    ['host', beet.utf8String],
-  ],
-  'Witness'
+export const createDappArgsBeet = new beet.BeetArgsStruct<CreateDappArgs>(
+  [['id', beet.u64]],
+  'CreateDappArgs'
 )

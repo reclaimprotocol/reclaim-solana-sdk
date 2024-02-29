@@ -67,6 +67,58 @@
           }
         }
       ]
+    },
+    {
+      "name": "createGroup",
+      "accounts": [
+        {
+          "name": "group",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "administrator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "CreateGroupArgs"
+          }
+        }
+      ]
+    },
+    {
+      "name": "addMemberGroup",
+      "accounts": [],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "AddMemberGroupArgs"
+          }
+        }
+      ]
+    },
+    {
+      "name": "createDapp",
+      "accounts": [],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "CreateDappArgs"
+          }
+        }
+      ]
     }
   ],
   "accounts": [
@@ -89,7 +141,7 @@
           },
           {
             "name": "epochIndex",
-            "type": "u64"
+            "type": "u32"
           },
           {
             "name": "epochs",
@@ -115,7 +167,7 @@
           },
           {
             "name": "index",
-            "type": "u64"
+            "type": "u32"
           },
           {
             "name": "createdAt",
@@ -139,9 +191,43 @@
           }
         ]
       }
+    },
+    {
+      "name": "Group",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "provider",
+            "type": "string"
+          },
+          {
+            "name": "members",
+            "type": {
+              "vec": "publicKey"
+            }
+          }
+        ]
+      }
     }
   ],
   "types": [
+    {
+      "name": "CreateDappArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": "u64"
+          }
+        ]
+      }
+    },
     {
       "name": "AddEpochArgs",
       "type": {
@@ -175,17 +261,117 @@
       }
     },
     {
+      "name": "AddMemberGroupArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "claimInfo",
+            "type": {
+              "defined": "ClaimInfo"
+            }
+          },
+          {
+            "name": "signedClaim",
+            "type": {
+              "defined": "SignedClaim"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "CreateGroupArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "provider",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
       "name": "Witness",
       "type": {
         "kind": "struct",
         "fields": [
           {
             "name": "address",
-            "type": "publicKey"
+            "type": "string"
           },
           {
             "name": "host",
             "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ClaimInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "provider",
+            "type": "string"
+          },
+          {
+            "name": "parameters",
+            "type": "string"
+          },
+          {
+            "name": "context",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ClaimData",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "identifier",
+            "type": {
+              "vec": "bytes"
+            }
+          },
+          {
+            "name": "address",
+            "type": {
+              "vec": "bytes"
+            }
+          },
+          {
+            "name": "timestamp",
+            "type": "u32"
+          },
+          {
+            "name": "epochIndex",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SignedClaim",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "claimData",
+            "type": {
+              "defined": "ClaimData"
+            }
+          },
+          {
+            "name": "signatures",
+            "type": {
+              "vec": "bytes"
+            }
           }
         ]
       }
@@ -207,7 +393,7 @@
         },
         {
           "name": "index",
-          "type": "u64",
+          "type": "u32",
           "index": false
         },
         {
@@ -235,6 +421,21 @@
           "index": false
         }
       ]
+    },
+    {
+      "name": "CreateGroupEvent",
+      "fields": [
+        {
+          "name": "groupId",
+          "type": "publicKey",
+          "index": false
+        },
+        {
+          "name": "provider",
+          "type": "string",
+          "index": false
+        }
+      ]
     }
   ],
   "errors": [
@@ -255,18 +456,28 @@
     },
     {
       "code": 6003,
+      "name": "ProviderTooLong",
+      "msg": "Provider length exceeds limit"
+    },
+    {
+      "code": 6004,
       "name": "InvalidWitnessClaimCount",
       "msg": "Invalid Witnes Claim count"
     },
     {
-      "code": 6004,
+      "code": 6005,
       "name": "EpochAlreadyExists",
       "msg": "Epoch already exists"
     },
     {
-      "code": 6005,
+      "code": 6006,
       "name": "MaxEpochLengthReached",
       "msg": "Max Epochs reached"
+    },
+    {
+      "code": 6007,
+      "name": "MemberAlreadyExists",
+      "msg": "Member already exists"
     }
   ],
   "metadata": {

@@ -26,4 +26,16 @@ pub mod reclaim {
     pub fn add_epoch(ctx: Context<AddEpoch>, args: AddEpochArgs) -> Result<()> {
         epoch::add(ctx, args)
     }
+
+    pub fn create_group(ctx: Context<CreateGroup>, args: CreateGroupArgs) -> Result<()> {
+        group::create(ctx, args)
+    }
+
+    pub fn add_member_group(ctx: Context<AddMemberGroup>, args: AddMemberGroupArgs) -> Result<()> {
+        group::add_member(ctx, args)
+    }
+
+    pub fn create_dapp(ctx: Context<CreateDapp>, args: CreateDappArgs) -> Result<()> {
+        dapp::create(ctx, args)
+    }
 }

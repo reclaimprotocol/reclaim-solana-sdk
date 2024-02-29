@@ -9,7 +9,7 @@ pub struct AddEpochEvent {
     // Epoch Config
     pub epoch_config: Pubkey,
     // Index
-    pub index: u64,
+    pub index: u32,
     // Epoch Creation timestamp
     pub created_at: i64,
     // Epoch Expiration timestamp
@@ -18,4 +18,12 @@ pub struct AddEpochEvent {
     pub minimum_witnesses_for_claim: u8,
     // Witnesses
     pub witnesses: Vec<Witness>,
+}
+
+#[event]
+pub struct CreateGroupEvent {
+    // Group PDA
+    pub group_id: Pubkey,
+    // Provider
+    pub provider: String,
 }

@@ -6,19 +6,20 @@
  */
 
 import * as beet from '@metaplex-foundation/beet'
-export type Witness = {
-  address: string
-  host: string
+import { ClaimData, claimDataBeet } from './ClaimData'
+export type SignedClaim = {
+  claimData: ClaimData
+  signatures: Uint8Array[]
 }
 
 /**
  * @category userTypes
  * @category generated
  */
-export const witnessBeet = new beet.FixableBeetArgsStruct<Witness>(
+export const signedClaimBeet = new beet.FixableBeetArgsStruct<SignedClaim>(
   [
-    ['address', beet.utf8String],
-    ['host', beet.utf8String],
+    ['claimData', claimDataBeet],
+    ['signatures', beet.array(beet.bytes)],
   ],
-  'Witness'
+  'SignedClaim'
 )

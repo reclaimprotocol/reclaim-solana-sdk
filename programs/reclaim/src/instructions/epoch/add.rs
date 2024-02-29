@@ -53,8 +53,8 @@ pub fn add(ctx: Context<AddEpoch>, args: AddEpochArgs) -> Result<()> {
     let rent_payer = &ctx.accounts.rent_payer;
 
     // Helpful for binary search later
-    witnesses.sort_by_key(|w| w.address);
-    witnesses.dedup_by_key(|w| w.address);
+    witnesses.sort_by_key(|w| w.address.clone());
+    witnesses.dedup_by_key(|w| w.address.clone());
 
     // Epoch mutations
     let epoch_index = epoch_config.epoch_index.checked_add(1).unwrap();
@@ -77,6 +77,7 @@ pub fn add(ctx: Context<AddEpoch>, args: AddEpochArgs) -> Result<()> {
     epoch.validate()?;
 
     // Epoch config mutations
+    let epoch_index = epoch_config.epoch_index.checked_add(1).unwrap();
     epoch_config.epoch_index = epoch_index;
 
     match epoch_config.epochs.binary_search(&epoch.key()) {

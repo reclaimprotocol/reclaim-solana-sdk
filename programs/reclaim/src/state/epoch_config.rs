@@ -10,7 +10,7 @@ pub struct EpochConfig {
     // Duration of each epoch
     pub epoch_duration_seconds: u64,
     // Current Epoch Index
-    pub epoch_index: u64,
+    pub epoch_index: u32,
     // Registered Epochs
     pub epochs: Vec<Pubkey>,
 }
@@ -21,7 +21,7 @@ impl EpochConfig {
         1 + // Bump
         32 + // Deployer
         8 + // Epoch Duration Seconds
-        8 + // Epoch Index
+        4 + // Epoch Index
         4 + // Vector Discriminator
         (epochs.len() * 32) // Epoch addresses
     }

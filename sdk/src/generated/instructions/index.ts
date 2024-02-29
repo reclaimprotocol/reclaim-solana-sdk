@@ -1,2 +1,5 @@
 export * from './addEpoch'
+export * from './addMemberGroup'
+export * from './createDapp'
+export * from './createGroup'
 export * from './initializeEpochConfig'
