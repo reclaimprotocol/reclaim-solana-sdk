@@ -33,6 +33,25 @@ export const createDappStruct = new beet.BeetArgsStruct<
   ],
   'CreateDappInstructionArgs'
 )
+/**
+ * Accounts required by the _createDapp_ instruction
+ *
+ * @property [_writable_] dapp
+ * @property [] group
+ * @property [**signer**] createKey
+ * @property [_writable_, **signer**] creator
+ * @category Instructions
+ * @category CreateDapp
+ * @category generated
+ */
+export type CreateDappInstructionAccounts = {
+  dapp: web3.PublicKey
+  group: web3.PublicKey
+  createKey: web3.PublicKey
+  creator: web3.PublicKey
+  systemProgram?: web3.PublicKey
+  anchorRemainingAccounts?: web3.AccountMeta[]
+}
 
 export const createDappInstructionDiscriminator = [
   230, 26, 137, 31, 106, 149, 11, 131,
@@ -41,6 +60,7 @@ export const createDappInstructionDiscriminator = [
 /**
  * Creates a _CreateDapp_ instruction.
  *
+ * @param accounts that will be accessed while the instruction is processed
  * @param args to provide as instruction data to the program
  *
  * @category Instructions
@@ -48,6 +68,7 @@ export const createDappInstructionDiscriminator = [
  * @category generated
  */
 export function createCreateDappInstruction(
+  accounts: CreateDappInstructionAccounts,
   args: CreateDappInstructionArgs,
   programId = new web3.PublicKey('rEcLDWaVLaymz82eGr6cutosPxE6SEzw6q4pbtLuyqf')
 ) {
@@ -55,7 +76,39 @@ export function createCreateDappInstruction(
     instructionDiscriminator: createDappInstructionDiscriminator,
     ...args,
   })
-  const keys: web3.AccountMeta[] = []
+  const keys: web3.AccountMeta[] = [
+    {
+      pubkey: accounts.dapp,
+      isWritable: true,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.group,
+      isWritable: false,
+      isSigner: false,
+    },
+    {
+      pubkey: accounts.createKey,
+      isWritable: false,
+      isSigner: true,
+    },
+    {
+      pubkey: accounts.creator,
+      isWritable: true,
+      isSigner: true,
+    },
+    {
+      pubkey: accounts.systemProgram ?? web3.SystemProgram.programId,
+      isWritable: false,
+      isSigner: false,
+    },
+  ]
+
+  if (accounts.anchorRemainingAccounts != null) {
+    for (const acc of accounts.anchorRemainingAccounts) {
+      keys.push(acc)
+    }
+  }
 
   const ix = new web3.TransactionInstruction({
     programId,

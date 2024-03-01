@@ -151,7 +151,33 @@
     },
     {
       "name": "createDapp",
-      "accounts": [],
+      "accounts": [
+        {
+          "name": "dapp",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "group",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "createKey",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "creator",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
       "args": [
         {
           "name": "args",
@@ -163,6 +189,38 @@
     }
   ],
   "accounts": [
+    {
+      "name": "Dapp",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": "u32"
+          },
+          {
+            "name": "groupRoot",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "createKey",
+            "type": "publicKey"
+          },
+          {
+            "name": "creator",
+            "type": "publicKey"
+          },
+          {
+            "name": "group",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
     {
       "name": "EpochConfig",
       "type": {
@@ -279,7 +337,7 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "id",
+            "name": "groupRoot",
             "type": "u64"
           }
         ]
@@ -501,6 +559,16 @@
         {
           "name": "provider",
           "type": "string",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "CreateDappEvent",
+      "fields": [
+        {
+          "name": "id",
+          "type": "u32",
           "index": false
         }
       ]

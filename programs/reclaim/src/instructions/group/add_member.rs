@@ -17,6 +17,7 @@ pub struct AddMemberGroup<'info> {
             args.claim_info.provider.as_bytes(),
         ],
         bump = group.bump
+        // TODO: If the below case is true, need to add validation here based on epoch
     )]
     pub group: Account<'info, Group>,
 
@@ -123,6 +124,8 @@ pub fn add_member(ctx: Context<AddMemberGroup>, args: AddMemberGroupArgs) -> Res
         rent_payer.to_account_info(),
         system_program.to_account_info(),
     )?;
+
+    group.validate()?;
 
     Ok(())
 }

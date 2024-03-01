@@ -7,7 +7,7 @@
 
 import * as beet from '@metaplex-foundation/beet'
 export type CreateDappArgs = {
-  id: beet.bignum
+  groupRoot: beet.bignum
 }
 
 /**
@@ -15,6 +15,6 @@ export type CreateDappArgs = {
  * @category generated
  */
 export const createDappArgsBeet = new beet.BeetArgsStruct<CreateDappArgs>(
-  [['id', beet.u64]],
+  [['groupRoot', beet.u64]],
   'CreateDappArgs'
 )

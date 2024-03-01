@@ -17,15 +17,17 @@ import {
 } from "sdk/src/eth-utils";
 import { ClaimInfo, CompleteClaimData, WitnessData } from "sdk/src/types";
 import {
+  Dapp,
   Epoch,
   EpochConfig,
   Group,
   createAddEpochInstruction,
   createAddMemberGroupInstruction,
+  createCreateDappInstruction,
   createCreateGroupInstruction,
   createInitializeEpochConfigInstruction,
 } from "sdk/src/generated";
-import { getEpochConfigPda, getEpochPda, getGroupPda } from "sdk/src";
+import { getDappPda, getEpochConfigPda, getEpochPda, getGroupPda } from "sdk/src";
 import { translateAndThrowAnchorError } from "sdk/src/errors";
 
 const connection = createLocalhostConnection();
@@ -36,6 +38,8 @@ describe("Reclaim group tests", () => {
   let epochConfigCreator: Keypair;
   let groupCreator: Keypair;
   let signer: Keypair;
+  // TODO: Not sure if this is same as groupCreator
+  let dappCreator: Keypair;
 
   let ethWitnesses: { wallet: HDNodeWallet; id: string; url: string }[];
   let groupProvider: string;
@@ -44,6 +48,7 @@ describe("Reclaim group tests", () => {
   let epochConfigPda: PublicKey;
   let epochPda: PublicKey;
   let groupPda: PublicKey;
+  let dappPda: PublicKey;
 
   before(async () => {
     const hostTemplate = "https://localhost:500";
@@ -61,6 +66,7 @@ describe("Reclaim group tests", () => {
     epochConfigCreator = await generateFundedKeypair(connection);
     groupCreator = await generateFundedKeypair(connection);
     signer = await generateFundedKeypair(connection);
+    dappCreator = await generateFundedKeypair(connection);
 
     groupProvider = "uid-dob";
     memberParams = "{'dob':'1988-02-10'}";
@@ -310,5 +316,37 @@ describe("Reclaim group tests", () => {
     );
 
     console.log(await Group.fromAccountAddress(connection, groupPda));
+  });
+
+  it("Creates a dapp", async () => {
+    const createKey = Keypair.generate();
+    // Dummy groupRoot number.
+    const groupRoot = 1234;
+
+    [dappPda] = getDappPda({
+      createKey: createKey.publicKey,
+      group: groupPda,
+    });
+
+    const createDappIx = createCreateDappInstruction(
+      {
+        createKey: createKey.publicKey,
+        creator: dappCreator.publicKey,
+        group: groupPda,
+        dapp: dappPda,
+      },
+      {
+        args: {
+          groupRoot,
+        },
+      }
+    );
+
+    await sendTransaction(connection, [createDappIx], dappCreator.publicKey, [
+      dappCreator,
+      createKey,
+    ]);
+
+    console.log(await Dapp.fromAccountAddress(connection, dappPda));
   });
 });

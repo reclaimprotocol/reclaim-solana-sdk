@@ -40,9 +40,17 @@ pub fn fetch_group_id(provider: &str) -> Result<u32> {
 
     match hashed_provider[offset..].try_into() {
         Ok(subset_hashed_content) => Ok(u32::from_be_bytes(subset_hashed_content)),
-        Err(e) => {
-            msg!("Error: {}", e);
-            err!(ReclaimError::ArithmeticPanic)
-        }
+        Err(_) => err!(ReclaimError::ArithmeticPanic),
+    }
+}
+
+pub fn fetch_dapp_id(creator: &Pubkey, group_root: u64) -> Result<u32> {
+    let serialized = format!("{}{}", creator, group_root);
+    let hashed_serialized = hash_content(&serialized);
+    let offset = hashed_serialized.len() - 4;
+
+    match hashed_serialized[offset..].try_into() {
+        Ok(subset_hashed_content) => Ok(u32::from_be_bytes(subset_hashed_content)),
+        Err(_) => err!(ReclaimError::ArithmeticPanic),
     }
 }

@@ -50,3 +50,18 @@ export function getGroupPda({
     programId
   );
 }
+
+export function getDappPda({
+  createKey,
+  group,
+  programId = PROGRAM_ID,
+}: {
+  createKey: PublicKey;
+  group: PublicKey;
+  programId?: PublicKey;
+}): [PublicKey, number] {
+  return PublicKey.findProgramAddressSync(
+    [SEED_PREFIX, SEED_DAPP, createKey.toBuffer(), group.toBuffer()],
+    programId
+  );
+}

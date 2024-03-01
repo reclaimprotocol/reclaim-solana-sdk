@@ -29,3 +29,9 @@ pub struct CreateGroupEvent {
     // Provider
     pub provider: String,
 }
+
+#[event]
+pub struct CreateDappEvent {
+    // Dapp ID
+    pub id: u32,
+}
