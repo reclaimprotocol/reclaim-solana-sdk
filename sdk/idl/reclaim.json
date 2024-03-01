@@ -243,6 +243,10 @@
         "kind": "struct",
         "fields": [
           {
+            "name": "id",
+            "type": "u32"
+          },
+          {
             "name": "bump",
             "type": "u8"
           },
@@ -485,7 +489,12 @@
       "name": "CreateGroupEvent",
       "fields": [
         {
-          "name": "groupId",
+          "name": "id",
+          "type": "u32",
+          "index": false
+        },
+        {
+          "name": "groupAddress",
           "type": "publicKey",
           "index": false
         },
@@ -555,11 +564,16 @@
     },
     {
       "code": 6011,
+      "name": "InvalidIdentifier",
+      "msg": "Invalid Identifier"
+    },
+    {
+      "code": 6012,
       "name": "InvalidWitnessSignature",
       "msg": "Invalid Witness Signature"
     },
     {
-      "code": 6012,
+      "code": 6013,
       "name": "ArithmeticPanic",
       "msg": "Arithmetic Error"
     }

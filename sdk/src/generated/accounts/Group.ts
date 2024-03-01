@@ -15,6 +15,7 @@ import * as beetSolana from '@metaplex-foundation/beet-solana'
  * @category generated
  */
 export type GroupArgs = {
+  id: number
   bump: number
   createKey: web3.PublicKey
   creator: web3.PublicKey
@@ -32,6 +33,7 @@ export const groupDiscriminator = [209, 249, 208, 63, 182, 89, 186, 254]
  */
 export class Group implements GroupArgs {
   private constructor(
+    readonly id: number,
     readonly bump: number,
     readonly createKey: web3.PublicKey,
     readonly creator: web3.PublicKey,
@@ -44,6 +46,7 @@ export class Group implements GroupArgs {
    */
   static fromArgs(args: GroupArgs) {
     return new Group(
+      args.id,
       args.bump,
       args.createKey,
       args.creator,
@@ -157,6 +160,7 @@ export class Group implements GroupArgs {
    */
   pretty() {
     return {
+      id: this.id,
       bump: this.bump,
       createKey: this.createKey.toBase58(),
       creator: this.creator.toBase58(),
@@ -178,6 +182,7 @@ export const groupBeet = new beet.FixableBeetStruct<
 >(
   [
     ['accountDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
+    ['id', beet.u32],
     ['bump', beet.u8],
     ['createKey', beetSolana.publicKey],
     ['creator', beetSolana.publicKey],

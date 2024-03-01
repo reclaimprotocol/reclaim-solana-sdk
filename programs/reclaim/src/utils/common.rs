@@ -32,3 +32,17 @@ pub fn fetch_random_seed(hashed_content: &[u8; 32], offset: u8) -> Result<u32> {
         Err(_) => err!(ReclaimError::ArithmeticPanic),
     }
 }
+
+pub fn fetch_group_id(provider: &str) -> Result<u32> {
+    let hashed_provider = hash_content(provider);
+    let hashed_provider_len = hashed_provider.len();
+    let offset = hashed_provider_len - 4;
+
+    match hashed_provider[offset..].try_into() {
+        Ok(subset_hashed_content) => Ok(u32::from_be_bytes(subset_hashed_content)),
+        Err(e) => {
+            msg!("Error: {}", e);
+            err!(ReclaimError::ArithmeticPanic)
+        }
+    }
+}

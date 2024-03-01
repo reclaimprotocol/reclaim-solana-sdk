@@ -22,8 +22,10 @@ pub struct AddEpochEvent {
 
 #[event]
 pub struct CreateGroupEvent {
+    // Group ID
+    pub id: u32,
     // Group PDA
-    pub group_id: Pubkey,
+    pub group_address: Pubkey,
     // Provider
     pub provider: String,
 }

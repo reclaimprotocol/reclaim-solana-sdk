@@ -5,6 +5,8 @@ use crate::errors::*;
 
 #[account]
 pub struct Group {
+    // Group ID
+    pub id: u32,
     // Bump for the address
     pub bump: u8,
     // Create key
@@ -20,6 +22,7 @@ pub struct Group {
 impl Group {
     pub fn size(members: &[Pubkey]) -> usize {
         8 + // Anchor discriminator
+        4 + // Group ID
         1 + // Bump
         32 + // Create key
         32 + // Creator

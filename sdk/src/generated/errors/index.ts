@@ -256,13 +256,36 @@ createErrorFromNameLookup.set(
 )
 
 /**
+ * InvalidIdentifier: 'Invalid Identifier'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class InvalidIdentifierError extends Error {
+  readonly code: number = 0x177b
+  readonly name: string = 'InvalidIdentifier'
+  constructor() {
+    super('Invalid Identifier')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, InvalidIdentifierError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x177b, () => new InvalidIdentifierError())
+createErrorFromNameLookup.set(
+  'InvalidIdentifier',
+  () => new InvalidIdentifierError()
+)
+
+/**
  * InvalidWitnessSignature: 'Invalid Witness Signature'
  *
  * @category Errors
  * @category generated
  */
 export class InvalidWitnessSignatureError extends Error {
-  readonly code: number = 0x177b
+  readonly code: number = 0x177c
   readonly name: string = 'InvalidWitnessSignature'
   constructor() {
     super('Invalid Witness Signature')
@@ -272,7 +295,7 @@ export class InvalidWitnessSignatureError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x177b, () => new InvalidWitnessSignatureError())
+createErrorFromCodeLookup.set(0x177c, () => new InvalidWitnessSignatureError())
 createErrorFromNameLookup.set(
   'InvalidWitnessSignature',
   () => new InvalidWitnessSignatureError()
@@ -285,7 +308,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class ArithmeticPanicError extends Error {
-  readonly code: number = 0x177c
+  readonly code: number = 0x177d
   readonly name: string = 'ArithmeticPanic'
   constructor() {
     super('Arithmetic Error')
@@ -295,7 +318,7 @@ export class ArithmeticPanicError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x177c, () => new ArithmeticPanicError())
+createErrorFromCodeLookup.set(0x177d, () => new ArithmeticPanicError())
 createErrorFromNameLookup.set(
   'ArithmeticPanic',
   () => new ArithmeticPanicError()

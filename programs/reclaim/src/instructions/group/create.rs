@@ -3,6 +3,7 @@ use anchor_lang::prelude::*;
 use crate::constants::*;
 use crate::events::*;
 use crate::state::*;
+use crate::utils::*;
 
 #[derive(Accounts)]
 #[instruction(args: CreateGroupArgs)]
@@ -33,9 +34,10 @@ pub fn create(ctx: Context<CreateGroup>, args: CreateGroupArgs) -> Result<()> {
     let creator = &ctx.accounts.creator;
     let create_key = &ctx.accounts.create_key;
 
-    // TODO: Store group id based on provider
+    let id = fetch_group_id(&args.provider)?;
 
     group.set_inner(Group {
+        id,
         bump: ctx.bumps.group,
         create_key: create_key.key(),
         creator: creator.key(),
@@ -46,7 +48,8 @@ pub fn create(ctx: Context<CreateGroup>, args: CreateGroupArgs) -> Result<()> {
     group.validate()?;
 
     emit!(CreateGroupEvent {
-        group_id: group.key(),
+        id,
+        group_address: group.key(),
         provider: args.provider
     });
 

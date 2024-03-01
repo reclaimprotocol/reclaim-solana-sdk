@@ -198,11 +198,11 @@ describe("Reclaim group tests", () => {
     const witnessData = witnessSignatures.map((w) => serializeHash(w));
     const identifierData = serializeHash(claimData.identifier);
 
-    console.log("\nHashed claim info:", hashedIdentifier);
-    console.log("\nCurrent Epoch Index", currentEpochIndex);
-    console.log("\nMessage to be signed:", message);
-    console.log("\nWitness signatures hex:", witnessSignatures);
-    console.log("\nWitness signatures bytes:", witnessData);
+    // console.log("\nHashed claim info:", hashedIdentifier);
+    // console.log("\nCurrent Epoch Index", currentEpochIndex);
+    // console.log("\nMessage to be signed:", message);
+    // console.log("\nWitness signatures hex:", witnessSignatures);
+    // console.log("\nWitness signatures bytes:", witnessData);
 
     const increaseComputeIx = createComputeLimitAndFeeIx(500_000, 1);
     const addMemberIx = createAddMemberGroupInstruction(
