@@ -68,6 +68,14 @@ pub fn add_member(ctx: Context<AddMemberGroup>, args: AddMemberGroupArgs) -> Res
 
     let ClaimInfo { context, .. } = args.claim_info;
 
+    let received_identifier = append_0x(&hex::encode(claim_data.identifier));
+    let expected_identifier = hash_claim_info(&args.claim_info);
+
+    require!(
+        received_identifier.eq(&expected_identifier),
+        ReclaimError::InvalidIdentifier
+    );
+
     match group.members.binary_search(&context) {
         Ok(_) => return err!(ReclaimError::MemberAlreadyExists),
         Err(member_index) => {

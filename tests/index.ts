@@ -1,2 +1,1 @@
-// import "./suites/epoch";
-import "./suites/group";
+import "./suites/all";

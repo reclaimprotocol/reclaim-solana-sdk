@@ -26,6 +26,7 @@ import {
   createInitializeEpochConfigInstruction,
 } from "sdk/src/generated";
 import { getEpochConfigPda, getEpochPda, getGroupPda } from "sdk/src";
+import { translateAndThrowAnchorError } from "sdk/src/errors";
 
 const connection = createLocalhostConnection();
 
@@ -88,8 +89,7 @@ describe("Reclaim group tests", () => {
       connection,
       [createEpochConfigIx],
       epochConfigCreator.publicKey,
-      [epochConfigCreator, createKey],
-      true
+      [epochConfigCreator, createKey]
     );
 
     console.log(await EpochConfig.fromAccountAddress(connection, epochConfigPda));
@@ -123,13 +123,9 @@ describe("Reclaim group tests", () => {
       }
     );
 
-    await sendTransaction(
-      connection,
-      [createEpochIx],
-      epochConfigCreator.publicKey,
-      [epochConfigCreator],
-      true
-    );
+    await sendTransaction(connection, [createEpochIx], epochConfigCreator.publicKey, [
+      epochConfigCreator,
+    ]);
 
     console.log(await Epoch.fromAccountAddress(connection, epochPda));
   });
@@ -155,13 +151,10 @@ describe("Reclaim group tests", () => {
       }
     );
 
-    await sendTransaction(
-      connection,
-      [createGroupIx],
-      groupCreator.publicKey,
-      [groupCreator, createKey],
-      true
-    );
+    await sendTransaction(connection, [createGroupIx], groupCreator.publicKey, [
+      groupCreator,
+      createKey,
+    ]);
 
     console.log(await Group.fromAccountAddress(connection, groupPda));
   });
@@ -209,8 +202,7 @@ describe("Reclaim group tests", () => {
     console.log("\nCurrent Epoch Index", currentEpochIndex);
     console.log("\nMessage to be signed:", message);
     console.log("\nWitness signatures hex:", witnessSignatures);
-    // console.log("\nWitness signatures bytes:", witnessData);
-    // console.log("\nIdentifier:", identifierData);
+    console.log("\nWitness signatures bytes:", witnessData);
 
     const increaseComputeIx = createComputeLimitAndFeeIx(500_000, 1);
     const addMemberIx = createAddMemberGroupInstruction(
@@ -246,8 +238,75 @@ describe("Reclaim group tests", () => {
       connection,
       [...increaseComputeIx, addMemberIx],
       signer.publicKey,
-      [signer],
-      true
+      [signer]
+    );
+
+    console.log(await Group.fromAccountAddress(connection, groupPda));
+  });
+
+  it("Fails to add another member due to different provider", async () => {
+    const context = Keypair.generate().publicKey;
+    const provider = "provider";
+    const parameters = "param";
+
+    const identifier =
+      "0xa6db2030140d1a1297ea836cf1fb0a1b467c5c21499dc0cd08dba63d62a6fdcc";
+    const timestamp = 1709140768;
+    const epochIndex = 1;
+
+    const message = [
+      identifier,
+      signer.publicKey.toString().toLowerCase(),
+      timestamp.toString(),
+      epochIndex.toString(),
+    ].join("\n");
+
+    const witnessSignatures = await witnessSelectSignMessage({
+      witnesses: ethWitnesses,
+      epochIndex,
+      identifier,
+      message,
+      minimumWitnessesForClaim,
+      timestamp,
+    });
+
+    const witnessData = witnessSignatures.map((w) => serializeHash(w));
+    const identifierData = serializeHash(identifier);
+
+    const increaseComputeIx = createComputeLimitAndFeeIx(350_000, 1);
+    const addMemberIx = createAddMemberGroupInstruction(
+      {
+        epochConfig: epochConfigPda,
+        epoch: epochPda,
+        group: groupPda,
+        signer: signer.publicKey,
+        rentPayer: signer.publicKey,
+        systemProgram: SystemProgram.programId,
+      },
+      {
+        args: {
+          claimInfo: {
+            context,
+            parameters,
+            provider: groupProvider,
+          },
+          signedClaim: {
+            claimData: {
+              identifier: identifierData,
+              signer: signer.publicKey,
+              epochIndex,
+              timestamp,
+            },
+            signatures: witnessData,
+          },
+        },
+      }
+    );
+
+    await assert.rejects(() =>
+      sendTransaction(connection, [...increaseComputeIx, addMemberIx], signer.publicKey, [
+        signer,
+      ]).catch(translateAndThrowAnchorError)
     );
 
     console.log(await Group.fromAccountAddress(connection, groupPda));

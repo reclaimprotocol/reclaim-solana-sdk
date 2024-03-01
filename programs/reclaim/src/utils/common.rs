@@ -1,4 +1,5 @@
 use crate::errors::*;
+use crate::state::*;
 
 use anchor_lang::prelude::*;
 use anchor_lang::solana_program::keccak::{hash as keccak_256, HASH_BYTES};
@@ -11,6 +12,12 @@ pub fn append_0x(content: &str) -> String {
 
 pub fn hash_content(content: &str) -> [u8; HASH_BYTES] {
     keccak_256(content.as_bytes()).to_bytes()
+}
+
+pub fn hash_claim_info(claim_info: &ClaimInfo) -> String {
+    let serialized_claim_info = claim_info.serialize_for_identifier();
+    let hash_bytes = hash_content(&serialized_claim_info);
+    append_0x(&hex::encode(hash_bytes))
 }
 
 pub fn fetch_random_seed(hashed_content: &[u8; 32], offset: u8) -> Result<u32> {

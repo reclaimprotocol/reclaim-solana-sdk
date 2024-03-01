@@ -15,6 +15,23 @@ pub struct ClaimInfo {
     pub context: Pubkey,
 }
 
+impl ClaimInfo {
+    pub fn serialize_for_identifier(&self) -> String {
+        let ClaimInfo {
+            provider,
+            parameters,
+            context,
+        } = self;
+
+        [
+            provider.to_string(),
+            parameters.to_string(),
+            context.to_string().to_lowercase(),
+        ]
+        .join("\n")
+    }
+}
+
 #[derive(AnchorSerialize, AnchorDeserialize, PartialEq, Eq, Clone, Debug)]
 pub struct ClaimData {
     pub identifier: [u8; 32],

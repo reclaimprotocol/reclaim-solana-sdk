@@ -1,8 +1,10 @@
 export * as generated from "./generated/index";
 export { PROGRAM_ID, PROGRAM_ADDRESS } from "./generated/index";
 
-/** Error parsing utils for the reclaim program. */
 export * as types from "./types";
+
+/** Error parsing utils for the reclaim program. */
+export * as errors from "./errors";
 
 /** Program accounts */
 export * as accounts from "./accounts";

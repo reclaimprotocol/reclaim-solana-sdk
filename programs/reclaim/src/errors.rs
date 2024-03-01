@@ -24,6 +24,8 @@ pub enum ReclaimError {
     MemberAlreadyExists,
     #[msg("Max Members reached")]
     MaxMembersReached,
+    #[msg("Invalid Identifier")]
+    InvalidIdentifier,
     #[msg("Invalid Witness Signature")]
     InvalidWitnessSignature,
     #[msg("Arithmetic Error")]
