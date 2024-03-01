@@ -67,7 +67,9 @@ pub fn add_member(ctx: Context<AddMemberGroup>, args: AddMemberGroupArgs) -> Res
         signatures,
     } = args.signed_claim;
 
-    let ClaimInfo { context, .. } = args.claim_info;
+    let ClaimInfo {
+        context_address, ..
+    } = args.claim_info;
 
     let received_identifier = append_0x(&hex::encode(claim_data.identifier));
     let expected_identifier = hash_claim_info(&args.claim_info);
@@ -77,7 +79,7 @@ pub fn add_member(ctx: Context<AddMemberGroup>, args: AddMemberGroupArgs) -> Res
         ReclaimError::InvalidIdentifier
     );
 
-    match group.members.binary_search(&context) {
+    match group.members.binary_search(&context_address) {
         Ok(_) => return err!(ReclaimError::MemberAlreadyExists),
         Err(member_index) => {
             /* Selecting witnesses */
@@ -112,7 +114,7 @@ pub fn add_member(ctx: Context<AddMemberGroup>, args: AddMemberGroupArgs) -> Res
                 );
             }
 
-            group.members.insert(member_index, context);
+            group.members.insert(member_index, context_address);
         }
     }
 

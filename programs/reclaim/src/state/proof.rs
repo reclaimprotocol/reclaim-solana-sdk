@@ -12,7 +12,8 @@ pub struct SignedClaim {
 pub struct ClaimInfo {
     pub provider: String,
     pub parameters: String,
-    pub context: Pubkey,
+    pub context_address: Pubkey,
+    pub context_message: String,
 }
 
 impl ClaimInfo {
@@ -20,13 +21,18 @@ impl ClaimInfo {
         let ClaimInfo {
             provider,
             parameters,
-            context,
+            context_address,
+            context_message,
         } = self;
 
         [
             provider.to_string(),
             parameters.to_string(),
-            context.to_string().to_lowercase(),
+            format!(
+                "{}{}",
+                context_address.to_string().to_lowercase(),
+                context_message.to_string()
+            ),
         ]
         .join("\n")
     }

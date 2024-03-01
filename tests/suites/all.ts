@@ -171,7 +171,8 @@ describe("Reclaim group tests", () => {
     const claimInfo: ClaimInfo = {
       provider: groupProvider,
       parameters: memberParams,
-      context: memberAddress.publicKey,
+      contextAddress: memberAddress.publicKey,
+      contextMessage: "Application specific context",
     };
 
     const hashedIdentifier = hashClaimInfo(claimInfo);
@@ -223,7 +224,8 @@ describe("Reclaim group tests", () => {
       {
         args: {
           claimInfo: {
-            context: claimInfo.context,
+            contextAddress: claimInfo.contextAddress,
+            contextMessage: claimInfo.contextMessage,
             parameters: claimInfo.parameters,
             provider: claimInfo.provider,
           },
@@ -251,7 +253,7 @@ describe("Reclaim group tests", () => {
   });
 
   it("Fails to add another member due to different provider", async () => {
-    const context = Keypair.generate().publicKey;
+    const contextAddress = Keypair.generate().publicKey;
     const provider = "provider";
     const parameters = "param";
 
@@ -292,7 +294,8 @@ describe("Reclaim group tests", () => {
       {
         args: {
           claimInfo: {
-            context,
+            contextAddress,
+            contextMessage: "Application specific context",
             parameters,
             provider: groupProvider,
           },

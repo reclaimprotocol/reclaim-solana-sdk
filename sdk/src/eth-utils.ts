@@ -5,7 +5,7 @@ export function hashClaimInfo(info: ClaimInfo): ClaimID {
   const str = [
     info.provider,
     info.parameters,
-    info.context.toString().toLowerCase(),
+    info.contextAddress.toString().toLowerCase() + info.contextMessage,
   ].join("\n");
   return keccak256(Buffer.from(str, "utf-8")).toLowerCase();
 }

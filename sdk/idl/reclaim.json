@@ -462,8 +462,12 @@
             "type": "string"
           },
           {
-            "name": "context",
+            "name": "contextAddress",
             "type": "publicKey"
+          },
+          {
+            "name": "contextMessage",
+            "type": "string"
           }
         ]
       }

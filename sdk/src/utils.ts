@@ -23,13 +23,3 @@ export function toU64Bytes(num: number): Uint8Array {
   u64.write(bytes, 0, num);
   return bytes;
 }
-
-export function serializeClaimInfo(claimInfo: ClaimInfo) {
-  const [serializedClaimInfo] = claimInfoBeet.serialize({
-    context: claimInfo.context,
-    parameters: claimInfo.parameters,
-    provider: claimInfo.provider,
-  });
-
-  return serializedClaimInfo;
-}

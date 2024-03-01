@@ -11,7 +11,8 @@ import * as beetSolana from '@metaplex-foundation/beet-solana'
 export type ClaimInfo = {
   provider: string
   parameters: string
-  context: web3.PublicKey
+  contextAddress: web3.PublicKey
+  contextMessage: string
 }
 
 /**
@@ -22,7 +23,8 @@ export const claimInfoBeet = new beet.FixableBeetArgsStruct<ClaimInfo>(
   [
     ['provider', beet.utf8String],
     ['parameters', beet.utf8String],
-    ['context', beetSolana.publicKey],
+    ['contextAddress', beetSolana.publicKey],
+    ['contextMessage', beet.utf8String],
   ],
   'ClaimInfo'
 )

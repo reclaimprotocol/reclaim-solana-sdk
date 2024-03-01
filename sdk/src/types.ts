@@ -32,7 +32,8 @@ export type ClaimID = string;
 export type ClaimInfo = {
   provider: string;
   parameters: string;
-  context: PublicKey;
+  contextAddress: PublicKey;
+  contextMessage: string;
 };
 
 export type AnyClaimInfo = ClaimInfo | { identifier: ClaimID };
