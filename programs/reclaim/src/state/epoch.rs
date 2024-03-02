@@ -7,7 +7,7 @@ use crate::utils::is_valid_ethereum_address;
 #[derive(AnchorSerialize, AnchorDeserialize, PartialEq, Eq, Debug, Clone)]
 pub struct Witness {
     pub address: String,
-    pub host: String,
+    pub url: String,
 }
 
 #[account]
@@ -30,7 +30,7 @@ pub struct Epoch {
 
 impl Epoch {
     pub fn size(witnesses: &[Witness]) -> usize {
-        let witness_size = (4 + MAX_WITNESS_ADDRESS_SIZE) + (4 + MAX_WITNESS_HOST_SIZE);
+        let witness_size = (4 + MAX_WITNESS_ADDRESS_SIZE) + (4 + MAX_WITNESS_URL_SIZE);
         8 + // Anchor discriminator
         1 + // Bump
         32 + // Epoch Config
@@ -53,7 +53,7 @@ impl Epoch {
                 return err!(ReclaimError::InvalidWitness);
             }
 
-            if witness.host.len().gt(&MAX_WITNESS_HOST_SIZE) {
+            if witness.url.len().gt(&MAX_WITNESS_URL_SIZE) {
                 return err!(ReclaimError::HostTooLong);
             }
         }

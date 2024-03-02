@@ -36,6 +36,34 @@
       ]
     },
     {
+      "name": "changeEpochIndexEpochConfig",
+      "accounts": [
+        {
+          "name": "epochConfig",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "deployer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": "ChangeEpochIndexEpochConfigArgs"
+          }
+        }
+      ]
+    },
+    {
       "name": "addEpoch",
       "accounts": [
         {
@@ -84,11 +112,6 @@
         {
           "name": "creator",
           "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "createKey",
-          "isMut": false,
           "isSigner": true
         },
         {
@@ -309,10 +332,6 @@
             "type": "u8"
           },
           {
-            "name": "createKey",
-            "type": "publicKey"
-          },
-          {
             "name": "creator",
             "type": "publicKey"
           },
@@ -359,6 +378,18 @@
           {
             "name": "minimumWitnessesForClaim",
             "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ChangeEpochIndexEpochConfigArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "newEpochIndex",
+            "type": "u32"
           }
         ]
       }
@@ -417,7 +448,7 @@
             "type": "string"
           },
           {
-            "name": "host",
+            "name": "url",
             "type": "string"
           }
         ]
@@ -487,8 +518,8 @@
             }
           },
           {
-            "name": "signer",
-            "type": "publicKey"
+            "name": "owner",
+            "type": "string"
           },
           {
             "name": "timestamp",
@@ -586,66 +617,71 @@
     },
     {
       "code": 6001,
+      "name": "InvalidEpochIndex",
+      "msg": "Invalid Epoch Index"
+    },
+    {
+      "code": 6002,
       "name": "InvalidWitness",
       "msg": "Invalid Witness"
     },
     {
-      "code": 6002,
+      "code": 6003,
       "name": "Unauthorized",
       "msg": "Unauthorized address"
     },
     {
-      "code": 6003,
+      "code": 6004,
       "name": "HostTooLong",
       "msg": "Host length exceeds limit"
     },
     {
-      "code": 6004,
+      "code": 6005,
       "name": "ProviderTooLong",
       "msg": "Provider length exceeds limit"
     },
     {
-      "code": 6005,
+      "code": 6006,
       "name": "InvalidWitnessClaimCount",
       "msg": "Invalid Witnes Claim count"
     },
     {
-      "code": 6006,
+      "code": 6007,
       "name": "EpochAlreadyExists",
       "msg": "Epoch already exists"
     },
     {
-      "code": 6007,
+      "code": 6008,
       "name": "MaxEpochLengthReached",
       "msg": "Max Epochs reached"
     },
     {
-      "code": 6008,
+      "code": 6009,
       "name": "MaxWitnessesReached",
       "msg": "Max Witnesses reached"
     },
     {
-      "code": 6009,
+      "code": 6010,
       "name": "MemberAlreadyExists",
       "msg": "Member already exists"
     },
     {
-      "code": 6010,
+      "code": 6011,
       "name": "MaxMembersReached",
       "msg": "Max Members reached"
     },
     {
-      "code": 6011,
+      "code": 6012,
       "name": "InvalidIdentifier",
       "msg": "Invalid Identifier"
     },
     {
-      "code": 6012,
+      "code": 6013,
       "name": "InvalidWitnessSignature",
       "msg": "Invalid Witness Signature"
     },
     {
-      "code": 6013,
+      "code": 6014,
       "name": "ArithmeticPanic",
       "msg": "Arithmetic Error"
     }

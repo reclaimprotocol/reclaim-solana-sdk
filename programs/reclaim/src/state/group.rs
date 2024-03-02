@@ -9,8 +9,6 @@ pub struct Group {
     pub id: u32,
     // Bump for the address
     pub bump: u8,
-    // Create key
-    pub create_key: Pubkey,
     // Creator
     pub creator: Pubkey,
     // Provider
@@ -26,7 +24,6 @@ impl Group {
         8 + // Anchor discriminator
         4 + // Group ID
         1 + // Bump
-        32 + // Create key
         32 + // Creator
         4 + // String discriminator
         MAX_GROUP_PROVIDER_SIZE +

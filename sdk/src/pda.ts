@@ -37,16 +37,14 @@ export function getEpochPda({
 }
 
 export function getGroupPda({
-  createKey,
   provider,
   programId = PROGRAM_ID,
 }: {
-  createKey: PublicKey;
   provider: string;
   programId?: PublicKey;
 }): [PublicKey, number] {
   return PublicKey.findProgramAddressSync(
-    [SEED_PREFIX, SEED_GROUP, createKey.toBuffer(), new TextEncoder().encode(provider)],
+    [SEED_PREFIX, SEED_GROUP, new TextEncoder().encode(provider)],
     programId
   );
 }

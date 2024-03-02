@@ -25,7 +25,6 @@ pub struct CreateDapp<'info> {
         seeds = [
             SEED_PREFIX,
             SEED_GROUP,
-            group.create_key.key().as_ref(),
             group.provider.as_bytes(),
         ],
         bump = group.bump

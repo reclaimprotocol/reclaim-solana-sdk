@@ -35,13 +35,36 @@ createErrorFromNameLookup.set(
 )
 
 /**
+ * InvalidEpochIndex: 'Invalid Epoch Index'
+ *
+ * @category Errors
+ * @category generated
+ */
+export class InvalidEpochIndexError extends Error {
+  readonly code: number = 0x1771
+  readonly name: string = 'InvalidEpochIndex'
+  constructor() {
+    super('Invalid Epoch Index')
+    if (typeof Error.captureStackTrace === 'function') {
+      Error.captureStackTrace(this, InvalidEpochIndexError)
+    }
+  }
+}
+
+createErrorFromCodeLookup.set(0x1771, () => new InvalidEpochIndexError())
+createErrorFromNameLookup.set(
+  'InvalidEpochIndex',
+  () => new InvalidEpochIndexError()
+)
+
+/**
  * InvalidWitness: 'Invalid Witness'
  *
  * @category Errors
  * @category generated
  */
 export class InvalidWitnessError extends Error {
-  readonly code: number = 0x1771
+  readonly code: number = 0x1772
   readonly name: string = 'InvalidWitness'
   constructor() {
     super('Invalid Witness')
@@ -51,7 +74,7 @@ export class InvalidWitnessError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x1771, () => new InvalidWitnessError())
+createErrorFromCodeLookup.set(0x1772, () => new InvalidWitnessError())
 createErrorFromNameLookup.set('InvalidWitness', () => new InvalidWitnessError())
 
 /**
@@ -61,7 +84,7 @@ createErrorFromNameLookup.set('InvalidWitness', () => new InvalidWitnessError())
  * @category generated
  */
 export class UnauthorizedError extends Error {
-  readonly code: number = 0x1772
+  readonly code: number = 0x1773
   readonly name: string = 'Unauthorized'
   constructor() {
     super('Unauthorized address')
@@ -71,7 +94,7 @@ export class UnauthorizedError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x1772, () => new UnauthorizedError())
+createErrorFromCodeLookup.set(0x1773, () => new UnauthorizedError())
 createErrorFromNameLookup.set('Unauthorized', () => new UnauthorizedError())
 
 /**
@@ -81,7 +104,7 @@ createErrorFromNameLookup.set('Unauthorized', () => new UnauthorizedError())
  * @category generated
  */
 export class HostTooLongError extends Error {
-  readonly code: number = 0x1773
+  readonly code: number = 0x1774
   readonly name: string = 'HostTooLong'
   constructor() {
     super('Host length exceeds limit')
@@ -91,7 +114,7 @@ export class HostTooLongError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x1773, () => new HostTooLongError())
+createErrorFromCodeLookup.set(0x1774, () => new HostTooLongError())
 createErrorFromNameLookup.set('HostTooLong', () => new HostTooLongError())
 
 /**
@@ -101,7 +124,7 @@ createErrorFromNameLookup.set('HostTooLong', () => new HostTooLongError())
  * @category generated
  */
 export class ProviderTooLongError extends Error {
-  readonly code: number = 0x1774
+  readonly code: number = 0x1775
   readonly name: string = 'ProviderTooLong'
   constructor() {
     super('Provider length exceeds limit')
@@ -111,7 +134,7 @@ export class ProviderTooLongError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x1774, () => new ProviderTooLongError())
+createErrorFromCodeLookup.set(0x1775, () => new ProviderTooLongError())
 createErrorFromNameLookup.set(
   'ProviderTooLong',
   () => new ProviderTooLongError()
@@ -124,7 +147,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidWitnessClaimCountError extends Error {
-  readonly code: number = 0x1775
+  readonly code: number = 0x1776
   readonly name: string = 'InvalidWitnessClaimCount'
   constructor() {
     super('Invalid Witnes Claim count')
@@ -134,7 +157,7 @@ export class InvalidWitnessClaimCountError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x1775, () => new InvalidWitnessClaimCountError())
+createErrorFromCodeLookup.set(0x1776, () => new InvalidWitnessClaimCountError())
 createErrorFromNameLookup.set(
   'InvalidWitnessClaimCount',
   () => new InvalidWitnessClaimCountError()
@@ -147,7 +170,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class EpochAlreadyExistsError extends Error {
-  readonly code: number = 0x1776
+  readonly code: number = 0x1777
   readonly name: string = 'EpochAlreadyExists'
   constructor() {
     super('Epoch already exists')
@@ -157,7 +180,7 @@ export class EpochAlreadyExistsError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x1776, () => new EpochAlreadyExistsError())
+createErrorFromCodeLookup.set(0x1777, () => new EpochAlreadyExistsError())
 createErrorFromNameLookup.set(
   'EpochAlreadyExists',
   () => new EpochAlreadyExistsError()
@@ -170,7 +193,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class MaxEpochLengthReachedError extends Error {
-  readonly code: number = 0x1777
+  readonly code: number = 0x1778
   readonly name: string = 'MaxEpochLengthReached'
   constructor() {
     super('Max Epochs reached')
@@ -180,7 +203,7 @@ export class MaxEpochLengthReachedError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x1777, () => new MaxEpochLengthReachedError())
+createErrorFromCodeLookup.set(0x1778, () => new MaxEpochLengthReachedError())
 createErrorFromNameLookup.set(
   'MaxEpochLengthReached',
   () => new MaxEpochLengthReachedError()
@@ -193,7 +216,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class MaxWitnessesReachedError extends Error {
-  readonly code: number = 0x1778
+  readonly code: number = 0x1779
   readonly name: string = 'MaxWitnessesReached'
   constructor() {
     super('Max Witnesses reached')
@@ -203,7 +226,7 @@ export class MaxWitnessesReachedError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x1778, () => new MaxWitnessesReachedError())
+createErrorFromCodeLookup.set(0x1779, () => new MaxWitnessesReachedError())
 createErrorFromNameLookup.set(
   'MaxWitnessesReached',
   () => new MaxWitnessesReachedError()
@@ -216,7 +239,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class MemberAlreadyExistsError extends Error {
-  readonly code: number = 0x1779
+  readonly code: number = 0x177a
   readonly name: string = 'MemberAlreadyExists'
   constructor() {
     super('Member already exists')
@@ -226,7 +249,7 @@ export class MemberAlreadyExistsError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x1779, () => new MemberAlreadyExistsError())
+createErrorFromCodeLookup.set(0x177a, () => new MemberAlreadyExistsError())
 createErrorFromNameLookup.set(
   'MemberAlreadyExists',
   () => new MemberAlreadyExistsError()
@@ -239,7 +262,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class MaxMembersReachedError extends Error {
-  readonly code: number = 0x177a
+  readonly code: number = 0x177b
   readonly name: string = 'MaxMembersReached'
   constructor() {
     super('Max Members reached')
@@ -249,7 +272,7 @@ export class MaxMembersReachedError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x177a, () => new MaxMembersReachedError())
+createErrorFromCodeLookup.set(0x177b, () => new MaxMembersReachedError())
 createErrorFromNameLookup.set(
   'MaxMembersReached',
   () => new MaxMembersReachedError()
@@ -262,7 +285,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidIdentifierError extends Error {
-  readonly code: number = 0x177b
+  readonly code: number = 0x177c
   readonly name: string = 'InvalidIdentifier'
   constructor() {
     super('Invalid Identifier')
@@ -272,7 +295,7 @@ export class InvalidIdentifierError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x177b, () => new InvalidIdentifierError())
+createErrorFromCodeLookup.set(0x177c, () => new InvalidIdentifierError())
 createErrorFromNameLookup.set(
   'InvalidIdentifier',
   () => new InvalidIdentifierError()
@@ -285,7 +308,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class InvalidWitnessSignatureError extends Error {
-  readonly code: number = 0x177c
+  readonly code: number = 0x177d
   readonly name: string = 'InvalidWitnessSignature'
   constructor() {
     super('Invalid Witness Signature')
@@ -295,7 +318,7 @@ export class InvalidWitnessSignatureError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x177c, () => new InvalidWitnessSignatureError())
+createErrorFromCodeLookup.set(0x177d, () => new InvalidWitnessSignatureError())
 createErrorFromNameLookup.set(
   'InvalidWitnessSignature',
   () => new InvalidWitnessSignatureError()
@@ -308,7 +331,7 @@ createErrorFromNameLookup.set(
  * @category generated
  */
 export class ArithmeticPanicError extends Error {
-  readonly code: number = 0x177d
+  readonly code: number = 0x177e
   readonly name: string = 'ArithmeticPanic'
   constructor() {
     super('Arithmetic Error')
@@ -318,7 +341,7 @@ export class ArithmeticPanicError extends Error {
   }
 }
 
-createErrorFromCodeLookup.set(0x177d, () => new ArithmeticPanicError())
+createErrorFromCodeLookup.set(0x177e, () => new ArithmeticPanicError())
 createErrorFromNameLookup.set(
   'ArithmeticPanic',
   () => new ArithmeticPanicError()

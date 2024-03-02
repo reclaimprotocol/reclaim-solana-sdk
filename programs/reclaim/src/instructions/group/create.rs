@@ -15,7 +15,6 @@ pub struct CreateGroup<'info> {
         seeds = [
             SEED_PREFIX,
             SEED_GROUP,
-            create_key.key().as_ref(),
             args.provider.as_bytes(),
         ],
         bump
@@ -24,22 +23,18 @@ pub struct CreateGroup<'info> {
 
     #[account(mut)]
     pub creator: Signer<'info>,
-    pub create_key: Signer<'info>,
-
     pub system_program: Program<'info, System>,
 }
 
 pub fn create(ctx: Context<CreateGroup>, args: CreateGroupArgs) -> Result<()> {
     let group = &mut ctx.accounts.group;
     let creator = &ctx.accounts.creator;
-    let create_key = &ctx.accounts.create_key;
 
     let id = fetch_group_id(&args.provider)?;
 
     group.set_inner(Group {
         id,
         bump: ctx.bumps.group,
-        create_key: create_key.key(),
         creator: creator.key(),
         provider: args.provider.clone(),
         members: vec![],

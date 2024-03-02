@@ -25,23 +25,19 @@ impl ClaimInfo {
             context_message,
         } = self;
 
-        [
-            provider.to_string(),
-            parameters.to_string(),
-            format!(
-                "{}{}",
-                context_address.to_string().to_lowercase(),
-                context_message.to_string()
-            ),
-        ]
-        .join("\n")
+        let context = format!(
+            "{{\"contextAddress\":\"{}\",\"contextMessage\":\"{}\"}}",
+            context_address, context_message
+        );
+
+        [provider.to_string(), parameters.to_string(), context].join("\n")
     }
 }
 
 #[derive(AnchorSerialize, AnchorDeserialize, PartialEq, Eq, Clone, Debug)]
 pub struct ClaimData {
     pub identifier: [u8; 32],
-    pub signer: Pubkey,
+    pub owner: String,
     pub timestamp: u32,
     pub epoch_index: u32,
 }
@@ -50,7 +46,7 @@ impl ClaimData {
     pub fn serialize_for_recovery(&self) -> String {
         let ClaimData {
             identifier,
-            signer,
+            owner,
             timestamp,
             epoch_index,
         } = self;
@@ -59,7 +55,7 @@ impl ClaimData {
 
         [
             identifier,
-            signer.to_string().to_lowercase(),
+            owner.to_string().to_lowercase(),
             timestamp.to_string(),
             epoch_index.to_string(),
         ]

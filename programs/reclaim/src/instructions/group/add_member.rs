@@ -13,11 +13,9 @@ pub struct AddMemberGroup<'info> {
         seeds = [
             SEED_PREFIX,
             SEED_GROUP,
-            group.create_key.as_ref(),
             args.claim_info.provider.as_bytes(),
         ],
         bump = group.bump
-        // TODO: If the below case is true, need to add validation here based on epoch
     )]
     pub group: Account<'info, Group>,
 
@@ -27,8 +25,6 @@ pub struct AddMemberGroup<'info> {
             epoch_config.key().as_ref(),
             SEED_EPOCH,
             &args.signed_claim.claim_data.epoch_index.to_le_bytes()
-            // TODO: Should ask if we need to validate the claim data's epoch index should match the current epoch_index in epoch_config
-            // &epoch_config.epoch_index.to_le_bytes()
         ],
         bump = epoch.bump,
         has_one = epoch_config @ ReclaimError::Unauthorized,
@@ -46,10 +42,9 @@ pub struct AddMemberGroup<'info> {
     pub epoch_config: Account<'info, EpochConfig>,
 
     #[account(
-        constraint = signer.key().eq(&args.signed_claim.claim_data.signer) @ ReclaimError::Unauthorized
+        constraint = signer.key().eq(&args.claim_info.context_address) @ ReclaimError::Unauthorized
     )]
     pub signer: Signer<'info>,
-
     #[account(mut)]
     pub rent_payer: Signer<'info>,
     pub system_program: Program<'info, System>,

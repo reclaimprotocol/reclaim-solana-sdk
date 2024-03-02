@@ -8,7 +8,7 @@
 import * as beet from '@metaplex-foundation/beet'
 export type Witness = {
   address: string
-  host: string
+  url: string
 }
 
 /**
@@ -18,7 +18,7 @@ export type Witness = {
 export const witnessBeet = new beet.FixableBeetArgsStruct<Witness>(
   [
     ['address', beet.utf8String],
-    ['host', beet.utf8String],
+    ['url', beet.utf8String],
   ],
   'Witness'
 )

@@ -1,5 +1,6 @@
 export * from './AddEpochArgs'
 export * from './AddMemberGroupArgs'
+export * from './ChangeEpochIndexEpochConfigArgs'
 export * from './ClaimData'
 export * from './ClaimInfo'
 export * from './CreateDappArgs'

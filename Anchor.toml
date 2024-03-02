@@ -1,5 +1,5 @@
 [toolchain]
-anchor_version = "0.29.0" # `anchor-cli` version to use
+anchor_version = "0.29.0"
 
 [features]
 seeds = false
@@ -7,13 +7,14 @@ skip-lint = false
 
 [programs.localnet]
 reclaim = "rEcLDWaVLaymz82eGr6cutosPxE6SEzw6q4pbtLuyqf"
+airdrop = "ArdPv6gtzY8HQuxzVQbZ8GHMRUatySoUv8jZH4vFj4Tm"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
 cluster = "Localnet"
-wallet = "~/.config/solana/id.json"
+wallet = "/Users/sundeepcharanramkumar/.config/solana/id.json"
 
 [scripts]
 test = "npx mocha --node-option require=ts-node/register --extension ts -t 1000000 tests/index.ts"

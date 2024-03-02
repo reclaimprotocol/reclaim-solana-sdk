@@ -5,12 +5,10 @@
  * See: https://github.com/metaplex-foundation/solita
  */
 
-import * as web3 from '@solana/web3.js'
 import * as beet from '@metaplex-foundation/beet'
-import * as beetSolana from '@metaplex-foundation/beet-solana'
 export type ClaimData = {
   identifier: number[] /* size: 32 */
-  signer: web3.PublicKey
+  owner: string
   timestamp: number
   epochIndex: number
 }
@@ -19,10 +17,10 @@ export type ClaimData = {
  * @category userTypes
  * @category generated
  */
-export const claimDataBeet = new beet.BeetArgsStruct<ClaimData>(
+export const claimDataBeet = new beet.FixableBeetArgsStruct<ClaimData>(
   [
     ['identifier', beet.uniformFixedSizeArray(beet.u8, 32)],
-    ['signer', beetSolana.publicKey],
+    ['owner', beet.utf8String],
     ['timestamp', beet.u32],
     ['epochIndex', beet.u32],
   ],

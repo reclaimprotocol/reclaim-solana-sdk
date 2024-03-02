@@ -4,6 +4,8 @@ use anchor_lang::prelude::*;
 pub enum ReclaimError {
     #[msg("Invalid Epoch Duration")]
     InvalidEpochDuration,
+    #[msg("Invalid Epoch Index")]
+    InvalidEpochIndex,
     #[msg("Invalid Witness")]
     InvalidWitness,
     #[msg("Unauthorized address")]

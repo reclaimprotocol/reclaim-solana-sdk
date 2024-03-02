@@ -24,6 +24,13 @@ pub mod reclaim {
         epoch::initialize(ctx, args)
     }
 
+    pub fn change_epoch_index_epoch_config(
+        ctx: Context<ChangeEpochIndexEpochConfig>,
+        args: ChangeEpochIndexEpochConfigArgs,
+    ) -> Result<()> {
+        epoch::change_epoch_index(ctx, args)
+    }
+
     pub fn add_epoch(ctx: Context<AddEpoch>, args: AddEpochArgs) -> Result<()> {
         epoch::add(ctx, args)
     }

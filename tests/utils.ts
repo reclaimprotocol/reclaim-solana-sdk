@@ -10,11 +10,9 @@ import {
   ComputeBudgetProgram,
 } from "@solana/web3.js";
 
-import testProgramKeypair from "../test-keypairs/test-program-keypair.json";
+import testProgramKeypair from "../program-keypairs/reclaim-program-keypair.json";
 import { EpochConfig } from "sdk/src/accounts";
 import { toBigInt } from "sdk/src/utils";
-import { HDNodeWallet } from "ethers";
-import { fetchWitnessListForClaim } from "sdk/src/eth-utils";
 
 export function createLocalhostConnection() {
   return new Connection("http://127.0.0.1:8899", "confirmed");

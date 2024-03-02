@@ -39,7 +39,7 @@ export type ClaimInfo = {
 export type AnyClaimInfo = ClaimInfo | { identifier: ClaimID };
 
 export type CompleteClaimData = {
-  signer: PublicKey;
+  owner: string;
   timestamp: number;
   epochIndex: number;
 } & AnyClaimInfo;
