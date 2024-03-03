@@ -45,6 +45,8 @@ const RECLAIM_PROGRAM_ID = new PublicKey("rEcLDWaVLaymz82eGr6cutosPxE6SEzw6q4pbt
 // Airdrop program ID
 const AIRDROP_PROGRAM_ID = new PublicKey("ArdPv6gtzY8HQuxzVQbZ8GHMRUatySoUv8jZH4vFj4Tm");
 
+const contextMessage = "Application related context";
+
 function App() {
   const { connection } = useConnection();
   const wallet = useAnchorWallet();
@@ -64,7 +66,7 @@ function App() {
 
       console.log(`Connected wallet: ${wallet?.publicKey?.toString()}`);
 
-      reclaimClient.addContext(publicKey.toString(), "Type the context here");
+      reclaimClient.addContext(publicKey.toString(), contextMessage);
       await reclaimClient.buildProofRequest(providerId);
       const signature = await reclaimClient.generateSignature(APP_SECRET);
 

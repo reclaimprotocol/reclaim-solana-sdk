@@ -6,7 +6,7 @@ export function hashClaimInfo(info: ClaimInfo): ClaimID {
     info.provider,
     info.parameters,
     JSON.stringify({
-      contextAddress: info.contextAddress,
+      contextAddress: info.contextAddress.toString(),
       contextMessage: info.contextMessage,
     }),
   ].join("\n");

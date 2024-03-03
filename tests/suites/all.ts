@@ -161,8 +161,7 @@ describe("Reclaim group tests", () => {
   });
 
   it("Adds a member", async () => {
-    const memberAddress = Keypair.generate();
-    const randomSigner = await generateFundedKeypair(connection);
+    const memberAddress = await generateFundedKeypair(connection);
 
     const claimInfo: ClaimInfo = {
       provider: groupProvider,
@@ -201,14 +200,19 @@ describe("Reclaim group tests", () => {
     const witnessData = witnessSignatures.map((w) => serializeHash(w));
     const identifierData = serializeHash(claimData.identifier);
 
+    // console.log("\nClaim Info:", claimInfo);
+    // console.log("\nIdentifier Data (Hashed Claim Info):", identifierData);
+    // console.log("\nWitness signature hex:", witnessSignatures);
+    // console.log("\nWitness signature data:", witnessData);
+
     const increaseComputeIx = createComputeLimitAndFeeIx(500_000, 1);
     const addMemberIx = createAddMemberGroupInstruction(
       {
         epochConfig: epochConfigPda,
         epoch: epochPda,
         group: groupPda,
-        signer: randomSigner.publicKey,
-        rentPayer: randomSigner.publicKey,
+        signer: memberAddress.publicKey,
+        rentPayer: memberAddress.publicKey,
         systemProgram: SystemProgram.programId,
       },
       {
@@ -235,8 +239,8 @@ describe("Reclaim group tests", () => {
     await sendTransaction(
       connection,
       [...increaseComputeIx, addMemberIx],
-      randomSigner.publicKey,
-      [randomSigner]
+      memberAddress.publicKey,
+      [memberAddress]
     );
 
     console.log(await Group.fromAccountAddress(connection, groupPda));
