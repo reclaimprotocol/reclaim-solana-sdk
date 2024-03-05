@@ -130,13 +130,8 @@
       ]
     },
     {
-      "name": "addMemberGroup",
+      "name": "verifyProof",
       "accounts": [
-        {
-          "name": "group",
-          "isMut": true,
-          "isSigner": false
-        },
         {
           "name": "epoch",
           "isMut": false,
@@ -151,23 +146,13 @@
           "name": "signer",
           "isMut": false,
           "isSigner": true
-        },
-        {
-          "name": "rentPayer",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
         }
       ],
       "args": [
         {
           "name": "args",
           "type": {
-            "defined": "AddMemberGroupArgs"
+            "defined": "VerifyProofArgs"
           }
         }
       ]
@@ -407,7 +392,19 @@
       }
     },
     {
-      "name": "AddMemberGroupArgs",
+      "name": "CreateGroupArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "provider",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "VerifyProofArgs",
       "type": {
         "kind": "struct",
         "fields": [
@@ -422,18 +419,6 @@
             "type": {
               "defined": "SignedClaim"
             }
-          }
-        ]
-      }
-    },
-    {
-      "name": "CreateGroupArgs",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "provider",
-            "type": "string"
           }
         ]
       }

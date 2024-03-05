@@ -8,7 +8,7 @@
 import * as beet from '@metaplex-foundation/beet'
 import { ClaimInfo, claimInfoBeet } from './ClaimInfo'
 import { SignedClaim, signedClaimBeet } from './SignedClaim'
-export type AddMemberGroupArgs = {
+export type VerifyProofArgs = {
   claimInfo: ClaimInfo
   signedClaim: SignedClaim
 }
@@ -17,11 +17,11 @@ export type AddMemberGroupArgs = {
  * @category userTypes
  * @category generated
  */
-export const addMemberGroupArgsBeet =
-  new beet.FixableBeetArgsStruct<AddMemberGroupArgs>(
+export const verifyProofArgsBeet =
+  new beet.FixableBeetArgsStruct<VerifyProofArgs>(
     [
       ['claimInfo', claimInfoBeet],
       ['signedClaim', signedClaimBeet],
     ],
-    'AddMemberGroupArgs'
+    'VerifyProofArgs'
   )

@@ -22,13 +22,13 @@ import {
   EpochConfig,
   Group,
   createAddEpochInstruction,
-  createAddMemberGroupInstruction,
   createCreateDappInstruction,
   createCreateGroupInstruction,
   createInitializeEpochConfigInstruction,
 } from "sdk/src/generated";
 import { getDappPda, getEpochConfigPda, getEpochPda, getGroupPda } from "sdk/src";
 import { translateAndThrowAnchorError } from "sdk/src/errors";
+import { createVerifyProofInstruction } from "sdk/lib/generated";
 
 const connection = createLocalhostConnection();
 
@@ -200,20 +200,12 @@ describe("Reclaim group tests", () => {
     const witnessData = witnessSignatures.map((w) => serializeHash(w));
     const identifierData = serializeHash(claimData.identifier);
 
-    // console.log("\nClaim Info:", claimInfo);
-    // console.log("\nIdentifier Data (Hashed Claim Info):", identifierData);
-    // console.log("\nWitness signature hex:", witnessSignatures);
-    // console.log("\nWitness signature data:", witnessData);
-
     const increaseComputeIx = createComputeLimitAndFeeIx(500_000, 1);
-    const addMemberIx = createAddMemberGroupInstruction(
+    const addMemberIx = createVerifyProofInstruction(
       {
         epochConfig: epochConfigPda,
         epoch: epochPda,
-        group: groupPda,
         signer: memberAddress.publicKey,
-        rentPayer: memberAddress.publicKey,
-        systemProgram: SystemProgram.programId,
       },
       {
         args: {
@@ -242,8 +234,6 @@ describe("Reclaim group tests", () => {
       memberAddress.publicKey,
       [memberAddress]
     );
-
-    console.log(await Group.fromAccountAddress(connection, groupPda));
   });
 
   it("Fails to add another member due to different provider", async () => {
@@ -277,14 +267,11 @@ describe("Reclaim group tests", () => {
 
     const randomSigner = await generateFundedKeypair(connection);
     const increaseComputeIx = createComputeLimitAndFeeIx(350_000, 1);
-    const addMemberIx = createAddMemberGroupInstruction(
+    const addMemberIx = createVerifyProofInstruction(
       {
         epochConfig: epochConfigPda,
         epoch: epochPda,
-        group: groupPda,
         signer: randomSigner.publicKey,
-        rentPayer: randomSigner.publicKey,
-        systemProgram: SystemProgram.programId,
       },
       {
         args: {
@@ -315,8 +302,6 @@ describe("Reclaim group tests", () => {
         [randomSigner]
       ).catch(translateAndThrowAnchorError)
     );
-
-    console.log(await Group.fromAccountAddress(connection, groupPda));
   });
 
   it("Creates a dapp", async () => {

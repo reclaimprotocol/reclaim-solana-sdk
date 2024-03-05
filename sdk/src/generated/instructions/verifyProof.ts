@@ -7,86 +7,73 @@
 
 import * as beet from '@metaplex-foundation/beet'
 import * as web3 from '@solana/web3.js'
-import {
-  AddMemberGroupArgs,
-  addMemberGroupArgsBeet,
-} from '../types/AddMemberGroupArgs'
+import { VerifyProofArgs, verifyProofArgsBeet } from '../types/VerifyProofArgs'
 
 /**
  * @category Instructions
- * @category AddMemberGroup
+ * @category VerifyProof
  * @category generated
  */
-export type AddMemberGroupInstructionArgs = {
-  args: AddMemberGroupArgs
+export type VerifyProofInstructionArgs = {
+  args: VerifyProofArgs
 }
 /**
  * @category Instructions
- * @category AddMemberGroup
+ * @category VerifyProof
  * @category generated
  */
-export const addMemberGroupStruct = new beet.FixableBeetArgsStruct<
-  AddMemberGroupInstructionArgs & {
+export const verifyProofStruct = new beet.FixableBeetArgsStruct<
+  VerifyProofInstructionArgs & {
     instructionDiscriminator: number[] /* size: 8 */
   }
 >(
   [
     ['instructionDiscriminator', beet.uniformFixedSizeArray(beet.u8, 8)],
-    ['args', addMemberGroupArgsBeet],
+    ['args', verifyProofArgsBeet],
   ],
-  'AddMemberGroupInstructionArgs'
+  'VerifyProofInstructionArgs'
 )
 /**
- * Accounts required by the _addMemberGroup_ instruction
+ * Accounts required by the _verifyProof_ instruction
  *
- * @property [_writable_] group
  * @property [] epoch
  * @property [] epochConfig
  * @property [**signer**] signer
- * @property [_writable_, **signer**] rentPayer
  * @category Instructions
- * @category AddMemberGroup
+ * @category VerifyProof
  * @category generated
  */
-export type AddMemberGroupInstructionAccounts = {
-  group: web3.PublicKey
+export type VerifyProofInstructionAccounts = {
   epoch: web3.PublicKey
   epochConfig: web3.PublicKey
   signer: web3.PublicKey
-  rentPayer: web3.PublicKey
-  systemProgram?: web3.PublicKey
   anchorRemainingAccounts?: web3.AccountMeta[]
 }
 
-export const addMemberGroupInstructionDiscriminator = [
-  19, 208, 234, 206, 11, 74, 237, 172,
+export const verifyProofInstructionDiscriminator = [
+  217, 211, 191, 110, 144, 13, 186, 98,
 ]
 
 /**
- * Creates a _AddMemberGroup_ instruction.
+ * Creates a _VerifyProof_ instruction.
  *
  * @param accounts that will be accessed while the instruction is processed
  * @param args to provide as instruction data to the program
  *
  * @category Instructions
- * @category AddMemberGroup
+ * @category VerifyProof
  * @category generated
  */
-export function createAddMemberGroupInstruction(
-  accounts: AddMemberGroupInstructionAccounts,
-  args: AddMemberGroupInstructionArgs,
+export function createVerifyProofInstruction(
+  accounts: VerifyProofInstructionAccounts,
+  args: VerifyProofInstructionArgs,
   programId = new web3.PublicKey('rEcLDWaVLaymz82eGr6cutosPxE6SEzw6q4pbtLuyqf')
 ) {
-  const [data] = addMemberGroupStruct.serialize({
-    instructionDiscriminator: addMemberGroupInstructionDiscriminator,
+  const [data] = verifyProofStruct.serialize({
+    instructionDiscriminator: verifyProofInstructionDiscriminator,
     ...args,
   })
   const keys: web3.AccountMeta[] = [
-    {
-      pubkey: accounts.group,
-      isWritable: true,
-      isSigner: false,
-    },
     {
       pubkey: accounts.epoch,
       isWritable: false,
@@ -101,16 +88,6 @@ export function createAddMemberGroupInstruction(
       pubkey: accounts.signer,
       isWritable: false,
       isSigner: true,
-    },
-    {
-      pubkey: accounts.rentPayer,
-      isWritable: true,
-      isSigner: true,
-    },
-    {
-      pubkey: accounts.systemProgram ?? web3.SystemProgram.programId,
-      isWritable: false,
-      isSigner: false,
     },
   ]
 
