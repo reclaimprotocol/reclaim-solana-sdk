@@ -60,8 +60,13 @@ pub mod airdrop {
         Ok(())
     }
 
+<<<<<<< HEAD
     pub fn claim_airdrop<'info>(
         ctx: Context<'_, '_, '_, 'info, ClaimAirdrop<'info>>,
+=======
+    pub fn claim_airdrop<'a, 'b, 'c, 'info>(
+        ctx: Context<'a, 'b, 'c, 'info, ClaimAirdrop<'info>>,
+>>>>>>> main
         args: ClaimAirdropArgs,
     ) -> Result<()> {
         /* region Reclaim proof verification */
@@ -70,15 +75,44 @@ pub mod airdrop {
             signed_claim,
         } = args;
 
+<<<<<<< HEAD
+=======
+        // Fetching group account as account info in case it needs to be created
+        let remaining_accounts = &mut ctx.remaining_accounts.iter();
+        let group_account_info = next_account_info(remaining_accounts)?;
+
+>>>>>>> main
         // Signer and rent payer
         let signer_account_info = ctx.accounts.signer.to_account_info();
         // Program Account infos
         let reclaim_program_info = ctx.accounts.reclaim_program.to_account_info();
+<<<<<<< HEAD
+=======
+        let system_program_info = ctx.accounts.system_program.to_account_info();
+
+        // Creating a group account if it didn't exist
+        if group_account_info.owner.ne(&reclaim::ID) && group_account_info.data_is_empty() {
+            create_group(
+                CpiContext::new(
+                    reclaim_program_info.clone(),
+                    CreateGroup {
+                        group: group_account_info.clone(),
+                        system_program: system_program_info.clone(),
+                        creator: signer_account_info.clone(),
+                    },
+                ),
+                CreateGroupArgs {
+                    provider: String::from(claim_info.provider.clone()),
+                },
+            )?;
+        }
+>>>>>>> main
 
         // Proof verification
         let epoch_config_account_info = ctx.accounts.epoch_config.to_account_info();
         let epoch_account_info = ctx.accounts.epoch.to_account_info();
 
+<<<<<<< HEAD
         verify_proof(
             CpiContext::new(
                 reclaim_program_info,
@@ -89,6 +123,21 @@ pub mod airdrop {
                 },
             ),
             VerifyProofArgs {
+=======
+        add_member_group(
+            CpiContext::new(
+                reclaim_program_info,
+                AddMemberGroup {
+                    epoch_config: epoch_config_account_info,
+                    epoch: epoch_account_info,
+                    group: group_account_info.clone(),
+                    rent_payer: signer_account_info.clone(),
+                    signer: signer_account_info,
+                    system_program: system_program_info,
+                },
+            ),
+            AddMemberGroupArgs {
+>>>>>>> main
                 claim_info: ReclaimClaimInfo {
                     parameters: claim_info.parameters,
                     context_message: claim_info.context_message,
