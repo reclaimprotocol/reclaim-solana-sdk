@@ -186,7 +186,7 @@ function App() {
             tokenProgram: TOKEN_2022_PROGRAM_ID,
           })
           .remainingAccounts([{ pubkey: groupPda, isWritable: true, isSigner: false }])
-          .preInstructions(createComputeLimitAndFeeIx(400_000, 1))
+          // .preInstructions(createComputeLimitAndFeeIx(400_000, 1))
           .transaction();
 
         return sendTransactionAnchor(
