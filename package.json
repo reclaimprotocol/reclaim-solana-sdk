@@ -1,32 +1,41 @@
 {
   "private": true,
   "workspaces": [
-    "sdk"
+    "sdk",
+    "scripts",
+    "airdrop-frontend"
   ],
   "scripts": {
     "generate-sdk": "yarn workspace sdk generate",
     "build-sdk": "yarn workspace sdk build",
     "build": "yarn generate-sdk && yarn build-sdk",
-    "test": "yarn build && anchor test -- --features=testing",
-    "pretest": "mkdir -p target/deploy && cp ./test-keypairs/test-program-keypair.json ./target/deploy/reclaim-keypair.json"
-  },
-  "dependencies": {
-    "@coral-xyz/anchor": "^0.29.0"
+    "test": "yarn build && anchor test",
+    "pretest": "mkdir -p target/deploy && cp ./program-keypairs/reclaim-program-keypair.json ./target/deploy/reclaim-keypair.json && cp ./program-keypairs/airdrop-program-keypair.json ./target/deploy/airdrop-keypair.json",
+    "fe": "yarn workspace airdrop-frontend start",
+    "fe-build": "yarn workspace airdrop-frontend build",
+    "backfill": "yarn workspace scripts backfill",
+    "add-epoch": "yarn workspace scripts add",
+    "init-airdrop": "yarn workspace scripts init-airdrop"
   },
   "devDependencies": {
-    "mocha": "10.2.0",
-    "ts-node": "10.9.1",
-    "@solana/spl-token": "*",
     "@solana/spl-memo": "^0.2.3",
+    "@solana/spl-token": "*",
     "@types/bn.js": "5.1.0",
     "@types/mocha": "10.0.1",
     "@types/node-fetch": "2.6.2",
-    "typescript": "*",
-    "prettier": "^2.6.2"
+    "ethers": "6.11.1",
+    "mocha": "10.2.0",
+    "prettier": "^2.6.2",
+    "js-sha256": "^0.9.0",
+    "snake-case": "^3.0.4",
+    "ts-node": "10.9.1",
+    "typescript": "*"
   },
   "resolutions": {
     "@solana/web3.js": "1.70.3",
     "@solana/spl-token": "0.3.6",
-    "typescript": "4.9.4"
+    "typescript": "4.9.4",
+    "ethers": "6.11.1",
+    "@coral-xyz/anchor": "^0.29.0"
   }
 }

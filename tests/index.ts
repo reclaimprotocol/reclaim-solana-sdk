@@ -1,1 +1,1 @@
-import "./suites/epoch";
+import "./suites/all";
