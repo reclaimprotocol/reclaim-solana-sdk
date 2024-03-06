@@ -76,7 +76,7 @@ version = "0.1.0"
 dependencies = [
  "anchor-lang",
  "anchor-spl",
- "reclaim",
+ "reclaim-solana 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -1595,8 +1595,18 @@ dependencies = [
 ]
 
 [[package]]
-name = "reclaim"
+name = "reclaim-solana"
 version = "0.1.0"
+dependencies = [
+ "anchor-lang",
+ "hex",
+]
+
+[[package]]
+name = "reclaim-solana"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bc561b62f35831dc1ac21bd2648d3d6b0d14c4a99599826359c8c765c22f3d5e"
 dependencies = [
  "anchor-lang",
  "hex",
