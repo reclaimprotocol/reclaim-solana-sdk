@@ -39,8 +39,8 @@ pub mod reclaim {
         group::create(ctx, args)
     }
 
-    pub fn add_member_group(ctx: Context<AddMemberGroup>, args: AddMemberGroupArgs) -> Result<()> {
-        group::add_member(ctx, args)
+    pub fn verify_proof(ctx: Context<VerifyProof>, args: VerifyProofArgs) -> Result<()> {
+        group::verify_proof(ctx, args)
     }
 
     pub fn create_dapp(ctx: Context<CreateDapp>, args: CreateDappArgs) -> Result<()> {
