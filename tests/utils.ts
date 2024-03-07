@@ -11,8 +11,8 @@ import {
 } from "@solana/web3.js";
 
 import testProgramKeypair from "../program-keypairs/reclaim-program-keypair.json";
-import { EpochConfig } from "sdk/src/accounts";
-import { toBigInt } from "sdk/src/utils";
+import { EpochConfig } from "@reclaimprotocol/solana-sdk/src/accounts";
+import { toBigInt } from "@reclaimprotocol/solana-sdk/src/utils";
 
 export function createLocalhostConnection() {
   return new Connection("http://127.0.0.1:8899", "confirmed");

@@ -9,7 +9,7 @@
     "@types/node": "^20.11.24",
     "ts-node": "^10.9.2",
     "typescript": "*",
-    "sdk": "1.0.0"
+    "@reclaimprotocol/solana-sdk": "0.1.0"
   },
   "scripts": {
     "backfill": "ts-node src/tx/backFillEpoch.ts",

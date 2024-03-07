@@ -1,8 +1,8 @@
-import { getEpochConfigPda, getEpochPda } from "sdk/src";
+import { getEpochConfigPda, getEpochPda } from "@reclaimprotocol/solana-sdk/src";
 import {
   createAddEpochInstruction,
   createInitializeEpochConfigInstruction,
-} from "sdk/src/generated";
+} from "@reclaimprotocol/solana-sdk/src/generated";
 
 import {
   createComputeLimitAndFeeIx,
@@ -12,7 +12,7 @@ import {
 } from "../utils";
 
 import { Keypair, SystemProgram } from "@solana/web3.js";
-import { WitnessData } from "sdk/src/types";
+import { WitnessData } from "@reclaimprotocol/solana-sdk/src/types";
 
 (async function (
   epochs: { witnesses: WitnessData[]; minimumWitnessesForClaim: number }[]

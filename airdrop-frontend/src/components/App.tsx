@@ -9,7 +9,7 @@ import { Program, AnchorProvider } from "@coral-xyz/anchor";
 import { IDL as TestAirdropIDL } from "../idl";
 import { PublicKey, SystemProgram } from "@solana/web3.js";
 // import { translateAndThrowAnchorError } from "sdk/lib/errors";
-import { getEpochPda, getGroupPda } from "sdk";
+import { getEpochPda, getGroupPda } from "@reclaimprotocol/solana-sdk";
 import {
   createComputeLimitAndFeeIx,
   sendTransactionAnchor,

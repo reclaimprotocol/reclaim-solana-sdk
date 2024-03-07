@@ -11,7 +11,7 @@
 ## Preparing the installation
 
 - `yarn install` for installing the packages
-- `yarn build` for building the sdk and the program
+- `yarn build` for building the solana sdk and the program
 - `yarn test` for testing the suites
 - `yarn backfill` for filling the previously created epochs
 - `yarn add-epoch` to add a new epoch

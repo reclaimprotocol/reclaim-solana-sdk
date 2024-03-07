@@ -1,5 +1,5 @@
-import { getEpochPda } from "sdk/src";
-import { createAddEpochInstruction } from "sdk/src/generated";
+import { getEpochPda } from "@reclaimprotocol/solana-sdk/src";
+import { createAddEpochInstruction } from "@reclaimprotocol/solana-sdk/src/generated";
 
 import {
   createComputeLimitAndFeeIx,
@@ -8,8 +8,8 @@ import {
 } from "../utils";
 
 import { Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
-import { EpochConfig } from "sdk/lib/generated";
-import { WitnessData } from "sdk/lib/types";
+import { EpochConfig } from "@reclaimprotocol/solana-sdk/lib/generated";
+import { WitnessData } from "@reclaimprotocol/solana-sdk/lib/types";
 
 (async function (
   epochConfigPda: PublicKey,
