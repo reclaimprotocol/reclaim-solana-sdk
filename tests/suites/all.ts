@@ -14,8 +14,12 @@ import {
   hashClaimInfo,
   serializeHash,
   witnessSelectSignMessage,
-} from "sdk/src/eth-utils";
-import { ClaimInfo, CompleteClaimData, WitnessData } from "sdk/src/types";
+} from "@reclaimprotocol/solana-sdk/src/eth-utils";
+import {
+  ClaimInfo,
+  CompleteClaimData,
+  WitnessData,
+} from "@reclaimprotocol/solana-sdk/src/types";
 import {
   Dapp,
   Epoch,
@@ -25,10 +29,15 @@ import {
   createCreateDappInstruction,
   createCreateGroupInstruction,
   createInitializeEpochConfigInstruction,
-} from "sdk/src/generated";
-import { getDappPda, getEpochConfigPda, getEpochPda, getGroupPda } from "sdk/src";
-import { translateAndThrowAnchorError } from "sdk/src/errors";
-import { createVerifyProofInstruction } from "sdk/lib/generated";
+} from "@reclaimprotocol/solana-sdk/src/generated";
+import {
+  getDappPda,
+  getEpochConfigPda,
+  getEpochPda,
+  getGroupPda,
+} from "@reclaimprotocol/solana-sdk/src";
+import { translateAndThrowAnchorError } from "@reclaimprotocol/solana-sdk/src/errors";
+import { createVerifyProofInstruction } from "@reclaimprotocol/solana-sdk/lib/generated";
 
 const connection = createLocalhostConnection();
 
