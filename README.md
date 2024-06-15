@@ -1,6 +1,16 @@
-# Reclaim Protocol
+# Reclaim - Solana
 
-## Prerequisites
+## Deployments
+
+| Chain Name | Deployed Address | Explorer Link |
+|:-----------|:-----------------|:--------------|
+| Solana Mainnet | rEcLDWaVLaymz82eGr6cutosPxE6SEzw6q4pbtLuyqf | https://explorer.solana.com/address/rEcLDWaVLaymz82eGr6cutosPxE6SEzw6q4pbtLuyqf|
+| Solana Testnet | rEcLDWaVLaymz82eGr6cutosPxE6SEzw6q4pbtLuyqf | https://explorer.solana.com/address/rEcLDWaVLaymz82eGr6cutosPxE6SEzw6q4pbtLuyqf?cluster=testnet|
+| Solana Devnet | rEcLDWaVLaymz82eGr6cutosPxE6SEzw6q4pbtLuyqf | https://explorer.solana.com/address/rEcLDWaVLaymz82eGr6cutosPxE6SEzw6q4pbtLuyqf?cluster=devnet
+
+## Environment
+
+### Prerequisites
 
 1. Rust - Install via [here](https://www.rust-lang.org/tools/install)
 2. Solana Tool Suite - Install via [here](https://docs.solanalabs.com/cli/install)
@@ -8,7 +18,7 @@
 4. yarn package manager - `npm install -g yarn`
 5. Anchor - Install via [here](https://www.anchor-lang.com/docs/installation)
 
-## Preparing the installation
+### Preparing the installation
 
 - `yarn install` for installing the packages
 - `yarn build` for building the solana sdk and the program
@@ -18,7 +28,7 @@
 - `yarn init-airdrop` to initialize the airdrop program
 - `yarn fe` for starting the front end
 
-## Repository directory
+### Repository directory
 
 - programs/reclaim - The anchor smart contract code for reclaim program
 - programs/airdrop - An example use case of utilizing reclaim program
