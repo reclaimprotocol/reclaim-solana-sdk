@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "description": "SDK for Reclaim Protocol",
   "main": "lib/index.js",
-  "license": "MIT",
+  "license": "See License in <https://github.com/reclaimprotocol/.github/blob/main/LICENSE>",
+  "bugs": {
+		"url": "https://github.com/reclaimprotocol/reclaim-solana-sdk/issues"
+	},
+	"homepage": "https://github.com/reclaimprotocol/reclaim-solana-sdk/",
   "devDependencies": {
     "@metaplex-foundation/solita": "^0.20.1",
     "@types/node": "18.11.17",

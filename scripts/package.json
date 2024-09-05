@@ -2,7 +2,11 @@
   "name": "scripts",
   "version": "1.0.0",
   "description": "Scripts to automate certain reclaim instructions",
-  "license": "MIT",
+  "license": "See License in <https://github.com/reclaimprotocol/.github/blob/main/LICENSE>",
+  "bugs": {
+		"url": "https://github.com/reclaimprotocol/reclaim-solana-sdk/issues"
+	},
+	"homepage": "https://github.com/reclaimprotocol/reclaim-solana-sdk/",
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
     "@types/fs-extra": "^11.0.4",

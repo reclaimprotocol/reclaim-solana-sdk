@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "sideEffects": false,
+  "license": "See License in <https://github.com/reclaimprotocol/.github/blob/main/LICENSE>",
+  "bugs": {
+		"url": "https://github.com/reclaimprotocol/reclaim-solana-sdk/issues"
+	},
+	"homepage": "https://github.com/reclaimprotocol/reclaim-solana-sdk/",
   "dependencies": {
     "@coral-xyz/anchor": "0.29.0",
     "@reclaimprotocol/js-sdk": "^0.1.3",
