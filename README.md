@@ -1,4 +1,8 @@
-# Reclaim - Solana SDK
+<div>
+    <div>
+        <img src="https://raw.githubusercontent.com/reclaimprotocol/.github/main/assets/banners/Solana-SDK.png"  />
+    </div>
+</div>
 
 ## Deployments
 
