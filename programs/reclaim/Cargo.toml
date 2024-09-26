@@ -1,5 +1,5 @@
 [package]
-name = "reclaim"
+name = "reclaim-solana"
 version = "0.1.0"
 description = "Reclaim Protocol SDK for Solana"
 edition = "2021"
