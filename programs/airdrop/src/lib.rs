@@ -3,14 +3,14 @@ use anchor_spl::associated_token::AssociatedToken;
 use anchor_spl::token_interface::*;
 
 /* Reclaim program imports */
-use reclaim::cpi::accounts::VerifyProof;
-use reclaim::cpi::verify_proof;
-use reclaim::instructions::VerifyProofArgs;
-use reclaim::program::Reclaim;
-use reclaim::state::ClaimData as ReclaimClaimData;
-use reclaim::state::ClaimInfo as ReclaimClaimInfo;
-use reclaim::state::SignedClaim as ReclaimSignedClaim;
-use reclaim::state::{Epoch, EpochConfig};
+use reclaim_solana::cpi::accounts::VerifyProof;
+use reclaim_solana::cpi::verify_proof;
+use reclaim_solana::instructions::VerifyProofArgs;
+use reclaim_solana::program::Reclaim;
+use reclaim_solana::state::ClaimData as ReclaimClaimData;
+use reclaim_solana::state::ClaimInfo as ReclaimClaimInfo;
+use reclaim_solana::state::SignedClaim as ReclaimSignedClaim;
+use reclaim_solana::state::{Epoch, EpochConfig};
 
 /* Airdrop program imports */
 use args::*;
