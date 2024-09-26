@@ -12,7 +12,7 @@ keywords = ["ZKPs", "Solana", "Anchor"]
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "reclaim"
+name = "reclaim_solana"
 
 [features]
 no-entrypoint = []
