@@ -454,7 +454,10 @@
             "name": "signatures",
             "type": {
               "vec": {
-                "array": ["u8", 65]
+                "array": [
+                  "u8",
+                  65
+                ]
               }
             }
           }
@@ -493,7 +496,10 @@
           {
             "name": "identifier",
             "type": {
-              "array": ["u8", 32]
+              "array": [
+                "u8",
+                32
+              ]
             }
           },
           {
