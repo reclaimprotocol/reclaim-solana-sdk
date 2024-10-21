@@ -7,20 +7,16 @@
   "homepage": "https://github.com/reclaimprotocol/reclaim-solana-sdk/",
   "workspaces": [
     "sdk",
-    "scripts",
-    "airdrop-frontend"
+    "scripts"
   ],
   "scripts": {
     "generate-sdk": "yarn workspace @reclaimprotocol/solana-sdk generate",
     "build-sdk": "yarn workspace @reclaimprotocol/solana-sdk build",
     "build": "yarn generate-sdk && yarn build-sdk",
     "test": "yarn build && anchor test",
-    "pretest": "mkdir -p target/deploy && cp ./program-keypairs/reclaim-program-keypair.json ./target/deploy/reclaim-keypair.json && cp ./program-keypairs/airdrop-program-keypair.json ./target/deploy/airdrop-keypair.json",
-    "fe": "yarn workspace airdrop-frontend start",
-    "fe-build": "yarn workspace airdrop-frontend build",
     "backfill": "yarn workspace scripts backfill",
-    "add-epoch": "yarn workspace scripts add",
-    "init-airdrop": "yarn workspace scripts init-airdrop"
+    "add-epoch": "yarn workspace scripts add-epoch --",
+    "setup": "yarn workspace scripts setup"
   },
   "devDependencies": {
     "@solana/spl-memo": "^0.2.3",

@@ -5,15 +5,14 @@ anchor_version = "0.29.0"
 seeds = false
 skip-lint = false
 
-[programs.localnet]
-reclaim = "rEcLDWaVLaymz82eGr6cutosPxE6SEzw6q4pbtLuyqf"
-airdrop = "ArdPv6gtzY8HQuxzVQbZ8GHMRUatySoUv8jZH4vFj4Tm"
+[programs.devnet]
+reclaim = "2NRByeqyVqXf4LByQP8aTAnWToK9zCwV8JSBZTW2gQAq"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "Localnet"
+cluster = "devnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]
