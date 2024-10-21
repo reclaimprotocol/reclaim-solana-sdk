@@ -1,24 +1,44 @@
 import { getEpochPda } from "@reclaimprotocol/solana-sdk/src";
 import { createAddEpochInstruction } from "@reclaimprotocol/solana-sdk/src/generated";
-
+import { readFileSync } from "fs";
+import { resolve } from "path";
+import { createComputeLimitAndFeeIx, sendTransaction } from "../utils";
 import {
-  createComputeLimitAndFeeIx,
-  createLocalhostConnection,
-  sendTransaction,
-} from "../utils";
-
-import { Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
+  Keypair,
+  PublicKey,
+  SystemProgram,
+  Connection,
+  clusterApiUrl,
+} from "@solana/web3.js";
 import { EpochConfig } from "@reclaimprotocol/solana-sdk/lib/generated";
 import { WitnessData } from "@reclaimprotocol/solana-sdk/lib/types";
 
+// Get the epochConfigPda from command-line arguments
+const args = process.argv.slice(2);
+if (args.length < 1) {
+  console.error("Please provide the epochConfigPda as the first argument.");
+  process.exit(1);
+}
+
+const epochConfigPda = new PublicKey(args[0]);
+
+const walletPath =
+  process.env.SOLANA_WALLET ||
+  resolve(process.env.HOME || "", ".config", "solana", "id.json");
+const walletKeypair = Keypair.fromSecretKey(
+  new Uint8Array(JSON.parse(readFileSync(walletPath, "utf-8")))
+);
+
 (async function (
   epochConfigPda: PublicKey,
-  epochCreator: Keypair,
   epoch: { witnesses: WitnessData[]; minimumWitnessesForClaim: number }
 ) {
   try {
-    const connection = createLocalhostConnection();
-    const createKey = Keypair.generate();
+    const cluster = process.env.SOLANA_CLUSTER || "devnet"; // Default to devnet if not specified
+    // @ts-ignore
+    const connection = new Connection(clusterApiUrl(cluster), "confirmed");
+
+    const epochCreator = walletKeypair;
 
     console.log(`Epoch config address: ${epochConfigPda.toString()}`);
 
@@ -56,14 +76,14 @@ import { WitnessData } from "@reclaimprotocol/solana-sdk/lib/types";
       connection,
       [...computeLimitFeeIx, createEpochIx],
       epochCreator.publicKey,
-      [epochCreator, createKey]
+      [epochCreator]
     );
 
     console.log(`Epoch created successfully: ${signature}`);
   } catch (err) {
-    console.error(err);
+    console.error("Failed to create epoch:", err);
   }
-})(PublicKey.default, Keypair.generate(), {
+})(epochConfigPda, {
   witnesses: [
     {
       id: "0x244897572368eadf65bfbc5aec98d8e5443a9072",

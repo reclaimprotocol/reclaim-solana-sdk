@@ -1,30 +1,43 @@
-import { getEpochConfigPda, getEpochPda } from "@reclaimprotocol/solana-sdk/src";
+import {
+  getEpochConfigPda,
+  getEpochPda,
+} from "@reclaimprotocol/solana-sdk/src";
 import {
   createAddEpochInstruction,
   createInitializeEpochConfigInstruction,
 } from "@reclaimprotocol/solana-sdk/src/generated";
-
+import { createComputeLimitAndFeeIx, sendTransaction } from "../utils";
 import {
-  createComputeLimitAndFeeIx,
-  createLocalhostConnection,
-  generateFundedKeypair,
-  sendTransaction,
-} from "../utils";
-
-import { Keypair, SystemProgram } from "@solana/web3.js";
+  Keypair,
+  SystemProgram,
+  clusterApiUrl,
+  Connection,
+} from "@solana/web3.js";
+import { readFileSync } from "fs";
+import { resolve } from "path";
 import { WitnessData } from "@reclaimprotocol/solana-sdk/src/types";
+
+// Set up the connection to the specified network
+const cluster = process.env.SOLANA_CLUSTER || "devnet";
+// @ts-ignore
+const connection = new Connection(clusterApiUrl(cluster), "confirmed");
+
+// Load the wallet keypair from the specified path
+const walletPath =
+  process.env.SOLANA_WALLET ||
+  resolve(process.env.HOME || "", ".config", "solana", "id.json");
+const walletKeypair = Keypair.fromSecretKey(
+  new Uint8Array(JSON.parse(readFileSync(walletPath, "utf-8")))
+);
 
 (async function (
   epochs: { witnesses: WitnessData[]; minimumWitnessesForClaim: number }[]
 ) {
   try {
-    const connection = createLocalhostConnection();
-
-    const epochCreator = await generateFundedKeypair(connection);
-    const createKey = Keypair.generate();
+    const epochCreator = walletKeypair;
 
     const [epochConfigPda] = getEpochConfigPda({
-      createKey: createKey.publicKey,
+      createKey: epochCreator.publicKey,
     });
 
     console.log(`Epoch config address: ${epochConfigPda.toString()}`);
@@ -32,7 +45,7 @@ import { WitnessData } from "@reclaimprotocol/solana-sdk/src/types";
     const computeLimitFeeIx = createComputeLimitAndFeeIx(400_000, 1);
     const createEpochConfigIx = createInitializeEpochConfigInstruction(
       {
-        createKey: createKey.publicKey,
+        createKey: epochCreator.publicKey,
         deployer: epochCreator.publicKey,
         epochConfig: epochConfigPda,
       },
@@ -74,23 +87,14 @@ import { WitnessData } from "@reclaimprotocol/solana-sdk/src/types";
       connection,
       [...computeLimitFeeIx, createEpochConfigIx, ...backTrackEpochIxs],
       epochCreator.publicKey,
-      [epochCreator, createKey]
+      [epochCreator]
     );
 
     console.log(`Epochs backfilled successfully: ${signature}`);
   } catch (err) {
-    console.error(err);
+    console.error("Failed to backfill epochs:", err);
   }
 })([
-  {
-    witnesses: [
-      {
-        id: "0x244897572368eadf65bfbc5aec98d8e5443a9072",
-        url: "https://reclaim-node.questbook.app",
-      },
-    ],
-    minimumWitnessesForClaim: 1,
-  },
   {
     witnesses: [
       {

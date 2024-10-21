@@ -17,8 +17,8 @@
   },
   "scripts": {
     "backfill": "ts-node src/tx/backFillEpoch.ts",
-    "add": "ts-node src/tx/createEpoch.ts",
-    "init-airdrop": "ts-node src/tx/initAirdrop.ts"
+    "add-epoch": "ts-node src/tx/createEpoch.ts",
+    "setup": "ts-node src/tx/setupProgram.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.29.0",
