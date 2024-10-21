@@ -92,7 +92,7 @@ export class Group implements GroupArgs {
    */
   static gpaBuilder(
     programId: web3.PublicKey = new web3.PublicKey(
-      'rEcLDWaVLaymz82eGr6cutosPxE6SEzw6q4pbtLuyqf'
+      '9Hk1t2edUC4kufMjkid2mt4m29cPwyaPhwNhAfrmEoG7'
     )
   ) {
     return beetSolana.GpaBuilder.fromStruct(programId, groupBeet)

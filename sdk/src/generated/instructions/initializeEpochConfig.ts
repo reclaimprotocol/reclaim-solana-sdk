@@ -71,7 +71,7 @@ export const initializeEpochConfigInstructionDiscriminator = [
 export function createInitializeEpochConfigInstruction(
   accounts: InitializeEpochConfigInstructionAccounts,
   args: InitializeEpochConfigInstructionArgs,
-  programId = new web3.PublicKey('rEcLDWaVLaymz82eGr6cutosPxE6SEzw6q4pbtLuyqf')
+  programId = new web3.PublicKey('9Hk1t2edUC4kufMjkid2mt4m29cPwyaPhwNhAfrmEoG7')
 ) {
   const [data] = initializeEpochConfigStruct.serialize({
     instructionDiscriminator: initializeEpochConfigInstructionDiscriminator,
