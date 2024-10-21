@@ -35,24 +35,6 @@ export function createComputeLimitAndFeeIx(units: number, feeLamports: number) {
   return [modifyComputeUnitsIx, addPriorityFeeIx];
 }
 
-export async function generateFundedKeypair(connection: Connection, solAmount?: number) {
-  const keypair = Keypair.generate();
-
-  const tx = await connection.requestAirdrop(
-    keypair.publicKey,
-    (solAmount ?? 1) * LAMPORTS_PER_SOL
-  );
-
-  const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash();
-
-  await connection.confirmTransaction({
-    blockhash,
-    lastValidBlockHeight,
-    signature: tx,
-  });
-
-  return keypair;
-}
 
 export async function getEpochConfigEpochIndex(
   connection: Connection,
