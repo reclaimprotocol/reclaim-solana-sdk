@@ -23,8 +23,9 @@ export function createRPCConnection(rpcUrl: string) {
   return new Connection(rpcUrl, "confirmed");
 }
 
+// This address will be updated when running `yarn setup`
 export function getTestProgramId() {
-  return new PublicKey("rEcLDWaVLaymz82eGr6cutosPxE6SEzw6q4pbtLuyqf");
+  return new PublicKey("2NRByeqyVqXf4LByQP8aTAnWToK9zCwV8JSBZTW2gQAq");
 }
 
 export function createComputeLimitAndFeeIx(units: number, feeLamports: number) {
@@ -39,7 +40,10 @@ export function createComputeLimitAndFeeIx(units: number, feeLamports: number) {
   return [modifyComputeUnitsIx, addPriorityFeeIx];
 }
 
-export async function generateFundedKeypair(connection: Connection, solAmount?: number) {
+export async function generateFundedKeypair(
+  connection: Connection,
+  solAmount?: number
+) {
   const keypair = Keypair.generate();
 
   const tx = await connection.requestAirdrop(
@@ -47,7 +51,8 @@ export async function generateFundedKeypair(connection: Connection, solAmount?: 
     (solAmount ?? 1) * LAMPORTS_PER_SOL
   );
 
-  const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash();
+  const { blockhash, lastValidBlockHeight } =
+    await connection.getLatestBlockhash();
 
   await connection.confirmTransaction({
     blockhash,
@@ -62,7 +67,10 @@ export async function getEpochConfigEpochIndex(
   connection: Connection,
   epochConfig: PublicKey
 ) {
-  let epochConfigAccount = await EpochConfig.fromAccountAddress(connection, epochConfig);
+  let epochConfigAccount = await EpochConfig.fromAccountAddress(
+    connection,
+    epochConfig
+  );
   const epochIndex = toBigInt(epochConfigAccount.epochIndex) + 1n;
   return epochIndex;
 }
@@ -74,7 +82,8 @@ export async function sendTransaction(
   signers: Signer[],
   skipPreflight: boolean = false
 ) {
-  const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash();
+  const { blockhash, lastValidBlockHeight } =
+    await connection.getLatestBlockhash();
   const message = new TransactionMessage({
     instructions,
     payerKey: payer,
@@ -103,7 +112,8 @@ export async function sendTransactionAnchor(
   signers: Keypair[],
   skipPreflight: boolean = false
 ) {
-  const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash();
+  const { blockhash, lastValidBlockHeight } =
+    await connection.getLatestBlockhash();
   const message = new TransactionMessage({
     instructions,
     payerKey: payer,
